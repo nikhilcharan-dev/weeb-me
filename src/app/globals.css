@@ -11,6 +11,7 @@
 html,
 body {
   max-width: 100svw;
+  background: white;
   scroll-behavior: smooth;
   transition: all 0.3s ease-in;
 }
@@ -74,20 +75,30 @@ a {
   height: 100vh;
 }
 
-
-/*.main {*/
-/*  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(120, 180, 255, 0.25), transparent 70%), #000000;*/
-/*}*/
-
 .clipped-video {
-
-  width: 320px;
-  height: 420px;
   object-fit: cover;
   opacity: 0;
   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  width: 320px;
+  height: 420px;
   animation: clip-in 1.5s forwards;
+  box-shadow: 0 20px 40px #00000059;
+}
+
+@media (max-width: 768px) {
+  .welcome-text {
+    font-size: clamp(2rem, 8vw, 4rem);
+    letter-spacing: 0.15rem;
+    margin-left: 0;
+    text-align: center;
+    padding: 0 1rem;
+  }
+
+  .clipped-video {
+    width: 150px;
+    height: auto;
+  }
+
 }
 
 @keyframes clip-in {

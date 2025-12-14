@@ -5,7 +5,6 @@ import gsap from "gsap";
 import { TextPlugin } from "gsap/TextPlugin";
 
 import HorizontalScroll from "../../components/horizontalScroll/HorizontalScroll";
-import "./globals.css";
 
 const videos = ["hero", "ruru", "serene", "dragon", "nova"];
 
