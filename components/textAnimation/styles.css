@@ -1,0 +1,31 @@
+.font-fade-wrapper {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 0 20px #8b5cf6;
+  color: white;
+}
+
+.font-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease-in-out;
+  font-size: 45px;
+  font-weight: bolder;
+  height: 40px;
+  width: 250px;
+  pointer-events: none;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.font-layer.visible {
+  opacity: 1;
+}
+

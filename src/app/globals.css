@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Arizonia&family=Black+Han+Sans&family=Cinzel+Decorative:wght@400;700;900&family=Nothing+You+Could+Do&family=Parisienne&family=Poiret+One&family=Rock+Salt&family=Sorts+Mill+Goudy:ital@0;1&display=swap');
+
+@font-face {
+  font-family: "gibed";
+  src: url("/fonts/gibed.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body {
+  max-width: 100svw;
+  scroll-behavior: smooth;
+  transition: all 0.3s ease-in;
+}
+
+body {
+  font-family: "gibed", system-ui, sans-serif;
+  letter-spacing: 0.15rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  height: 0;
+  width: 1px;
+}
+
+/* track (background) */
+::-webkit-scrollbar-track {
+  background: black;
+}
+
+/* thumb (the draggable part) */
+::-webkit-scrollbar-thumb {
+  background: rgb(255, 255, 255);
+  border-radius: 10px;
+}
+
+.section-default {
+  height: 100svh;
+}
+
+.intro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-text {
+  font-size: clamp(2.5rem, 6vw, 6rem);
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+  opacity: 0;
+
+  margin-left: 20vw;
+}
+
+.lock-scroll {
+  overflow: hidden;
+  height: 100vh;
+}
+
+
+/*.main {*/
+/*  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(120, 180, 255, 0.25), transparent 70%), #000000;*/
+/*}*/
+
+.clipped-video {
+
+  width: 320px;
+  height: 420px;
+  object-fit: cover;
+  opacity: 0;
+  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  animation: clip-in 1.5s forwards;
+}
+
+@keyframes clip-in {
+  to {
+    opacity: 1;
+    clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+  }
+}

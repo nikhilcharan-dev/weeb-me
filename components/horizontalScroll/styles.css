@@ -1,0 +1,47 @@
+.hs-wrapper {
+  height: 2000vh; /* controls scroll duration */
+}
+
+.hs-track {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+}
+
+.hs-panel {
+  width: 100vw;
+  height: 100vh;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 4rem;
+  font-weight: 600;
+  background: #111;
+  color: white;
+  border-right: 1px solid rgba(255,255,255,0.15);
+}
+
+.zero {
+  width: 75%;
+  border-right: 0;
+}
+
+@media (max-width: 768px) {
+  .hs-wrapper {
+    height: auto;
+  }
+
+  .hs-track {
+    position: static;
+    flex-direction: column;
+  }
+
+  .hs-panel {
+    width: 100%;
+    height: 100vh;
+  }
+}
