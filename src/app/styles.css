@@ -1,0 +1,32 @@
+.scroll-text {
+  position: absolute;
+  bottom: 10vh;
+  left: 50svw;
+  transform: translateX(-50%);
+  opacity: 0;
+
+  font-size: 1.3rem;
+}
+
+.title {
+  width: 50vw;
+  text-align: center;
+
+  /*text-shadow: ;*/
+}
+
+.clipped-video {
+  margin-right: 15vw;
+}
+
+/* Chrome, Edge, Safari */
+.intro *::selection {
+  background: black;
+  color: #fff;
+}
+
+/* Firefox */
+.intro *::-moz-selection {
+  background: #000;
+  color: #fff;
+}

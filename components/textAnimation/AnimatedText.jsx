@@ -1,41 +1,63 @@
-'use client'
-import { useState, useEffect } from "react";
+'use client';
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./styles.css";
 
-const fonts = [
-    "'Alex Brush', cursive",
-    "'Arizonia', cursive",
-    "'Black Han Sans', sans-serif",
-    "'Cinzel Decorative', serif",
-    "'Nothing You Could Do', cursive",
-    "'Parisienne', cursive",
-    "'Poiret One', sans-serif",
-    "cursive",
-    "'Sorts Mill Goudy', serif"
-];
+gsap.registerPlugin(ScrollTrigger);
 
 export default function AnimatedText() {
-    const [index, setIndex] = useState(0);
+    const wrapperRef = useRef(null);
 
     useEffect(() => {
-        const t = setInterval(() => {
-            setIndex((i) => (i + 1) % fonts.length);
-        }, 800);
+        const ctx = gsap.context(() => {
 
-        return () => clearInterval(t);
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: wrapperRef.current,
+                    start: "top center-=100",   // when section enters viewport
+                    end: "top top",     // animation completes here
+                    scrub: true,           // 🔥 scroll controls animation
+                    markers: true,
+                    id: "name-intro"
+                },
+            })
+            .from(".l-1", {
+                y: -200,
+                opacity: 0,
+                rotate: -60,
+                ease: "none",
+            })
+            .from(
+                ".l-2",
+                {
+                    y: -150,
+                    opacity: 0,
+                    ease: "none",
+                },
+                0.15
+            )
+            .from(
+                ".icarus",
+                {
+                    y: -250,
+                    opacity: 0,
+                    scale: 0.8,
+                    ease: "none",
+                },
+                0
+            );
+        }, wrapperRef);
+
+
+        return () => ctx.revert();
     }, []);
 
     return (
-        <div className="font-fade-wrapper">
-            {fonts.map((font, i) => (
-                <span
-                    key={i}
-                    className={`font-layer ${index === i ? "visible" : ""}`}
-                    style={{ fontFamily: font }}
-                >
-                  Nikhil Charan
-                </span>
-            ))}
+        <div ref={wrapperRef} className="text-wrapper">
+            <span className="text-layer l-1 image-text">Nikhil</span>
+            <span className="text-layer l-2">Charan</span>
+            <img src="/images/icarus.jpg" alt="icarus" className="icarus" />
         </div>
     );
 }

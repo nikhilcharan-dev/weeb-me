@@ -5,7 +5,7 @@ export default function Navigation() {
         <nav>
             <ul className="nav-list">
                 <li>Home</li>
-                <li>About</li>
+                <li>Projects</li>
                 <li>Timeline</li>
                 <li>Contacts</li>
             </ul>

@@ -1,31 +1,58 @@
-.font-fade-wrapper {
-  display: flex;
+.text-wrapper {
   position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-shadow: 0 0 20px #8b5cf6;
-  color: white;
-}
-
-.font-layer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  transition: opacity 0.9s ease-in-out;
-  font-size: 45px;
-  font-weight: bolder;
-  height: 40px;
-  width: 250px;
-  pointer-events: none;
-  white-space: nowrap;
+  height: 100vh;
+  width: 100%;
   display: flex;
   justify-content: center;
-  text-align: center;
+  align-items: center;
+  background: black;
+
+
+  /*border: 2px solid greenyellow;*/
+  overflow: hidden;
 }
 
-.font-layer.visible {
-  opacity: 1;
+/* Shared text styles */
+.text-layer {
+  position: absolute;
+  font-size: 13rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  color: white;
+  z-index: 2;
 }
 
+/* IMAGE CLIPPED TEXT */
+/*.image-text {*/
+/*  background-image: url("/images/hero.jpg");*/
+/*  background-size: contain;*/
+/*  background-position: center;*/
+
+/*  color: transparent;*/
+
+/*  -webkit-background-clip: text;*/
+/*  background-clip: text;*/
+/*}*/
+
+/* Positions */
+.l-1 {
+  bottom: 25%;
+  left: 5%;
+  transform: rotate(-30deg);
+}
+
+.l-2 {
+  left: 30%;
+  bottom: 5%;
+}
+
+.icarus {
+  position: absolute;
+  top: 5%;
+  left: 10%;
+
+
+  height: 300px;
+  width: auto;
+  z-index: 1;
+}

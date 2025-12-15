@@ -1,5 +1,5 @@
 .hs-wrapper {
-  height: 2000vh; /* controls scroll duration */
+  height: 100vh;
 }
 
 .hs-track {
@@ -7,59 +7,35 @@
   top: 0;
   height: 100vh;
   display: flex;
+  will-change: transform;
 }
 
 .hs-panel {
   width: 100vw;
   height: 100vh;
   flex-shrink: 0;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 4rem;
-  font-weight: 600;
   background: black;
   color: white;
-  border-right: 1px solid rgba(255,255,255,0.15);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.zero {
-  width: 75%;
-  border-right: 0;
-}
+/* Mobile fallback */
 @media (max-width: 768px) {
-
-  /* Kill fake scroll */
   .hs-wrapper {
     height: auto;
   }
 
-  /* Disable sticky + horizontal layout */
   .hs-track {
     position: static;
     height: auto;
-    display: flex;
     flex-direction: column;
     transform: none !important;
   }
 
-  /* Stack panels vertically */
   .hs-panel {
     width: 100%;
     height: 100svh;
-    border-right: 0;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-    font-size: clamp(1.8rem, 8vw, 3rem);
-  }
-
-  .zero {
-    width: 100%;
-  }
-
-  /* Prevent sideways scroll */
-  body {
-    overflow-x: hidden;
   }
 }
