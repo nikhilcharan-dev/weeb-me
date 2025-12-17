@@ -80,7 +80,7 @@ export default function Home() {
 
     return (
         <>
-            {/*<Cursor />*/}
+            <Cursor />
             <section className="section-default intro" data-cursor="#000">
                 <h1 className="welcome-text title">Yawwwn!!</h1>
 

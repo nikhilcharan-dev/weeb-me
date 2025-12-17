@@ -16,7 +16,6 @@ export default function PanelOne({ hsTimeline, timelineReady }) {
             gsap.set(".p1-title", { x: 300, opacity: 0 });
             gsap.set(".p1-desc", { x: 200, opacity: 0 });
 
-            // 🔥 start AFTER panel is clearly visible
             const start = "panel-1+=0.45";
 
             hsTimeline.current.to(

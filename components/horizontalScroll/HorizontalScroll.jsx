@@ -21,7 +21,7 @@ export default function HorizontalScroll() {
             const panels = gsap.utils.toArray(".hs-panel");
 
             // IMPORTANT: exclude PanelZero from horizontal motion
-            const horizontalPanels = panels.slice(1);
+            const horizontalPanels = panels;
             const count = horizontalPanels.length;
 
             hsTimeline.current = gsap.timeline({
@@ -36,7 +36,7 @@ export default function HorizontalScroll() {
             });
 
             horizontalPanels.forEach((_, i) => {
-                const realIndex = i + 1; // panel-1, panel-2, ...
+                const realIndex = i; // panel-1, panel-2, ...
 
                 hsTimeline.current.addLabel(`panel-${realIndex}`, i);
 
@@ -59,10 +59,13 @@ export default function HorizontalScroll() {
     }, []);
 
     return (
-        <section ref={wrapperRef} className="hs-wrapper">
+        <section ref={wrapperRef} className="hs-wrapper " data-cursor="#000">
             <div ref={trackRef} className="hs-track">
-                <div className="hs-panel zero">
-                    <PanelZero />
+                <div className="hs-panel zero " data-cursor="#000">
+                    <PanelZero
+                        hsTimeline={hsTimeline}
+                        timelineReady={timelineReady}
+                    />
                 </div>
 
                 <div className="hs-panel one">

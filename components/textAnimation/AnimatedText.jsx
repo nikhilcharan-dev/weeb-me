@@ -18,21 +18,25 @@ export default function AnimatedText() {
                     start: "top center-=100",   // when section enters viewport
                     end: "top top",     // animation completes here
                     scrub: true,           // 🔥 scroll controls animation
-                    markers: true,
-                    id: "name-intro"
+                    // markers: true,
+                    // id: "name-intro"
                 },
             })
             .from(".l-1", {
+                x: 100,
                 y: -200,
                 opacity: 0,
                 rotate: -60,
+                filter: "blur(8px)",
                 ease: "none",
             })
             .from(
                 ".l-2",
                 {
+                    x: 100,
                     y: -150,
                     opacity: 0,
+                    filter: "blur(10px)",
                     ease: "none",
                 },
                 0.15
@@ -55,8 +59,8 @@ export default function AnimatedText() {
 
     return (
         <div ref={wrapperRef} className="text-wrapper">
-            <span className="text-layer l-1 image-text">Nikhil</span>
-            <span className="text-layer l-2">Charan</span>
+            <span className="text-layer l-1 image-text">NIKHIL</span>
+            <span className="text-layer l-2">CHARAN</span>
             <img src="/images/icarus.jpg" alt="icarus" className="icarus" />
         </div>
     );

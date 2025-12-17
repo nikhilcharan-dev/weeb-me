@@ -15,7 +15,7 @@
 /* Shared text styles */
 .text-layer {
   position: absolute;
-  font-size: 13rem;
+  font-size: 12rem;
   font-weight: 900;
   letter-spacing: 0.05em;
   color: white;
@@ -36,19 +36,19 @@
 
 /* Positions */
 .l-1 {
-  bottom: 25%;
+  left: 25%;
   left: 5%;
-  transform: rotate(-30deg);
+  /*transform: rotate(-30deg);*/
 }
 
 .l-2 {
-  left: 30%;
+  left: 28%;
   bottom: 5%;
 }
 
 .icarus {
   position: absolute;
-  top: 5%;
+  top: 0;
   left: 10%;
 
 
