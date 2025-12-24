@@ -59,9 +59,9 @@ export default function HorizontalScroll() {
     }, []);
 
     return (
-        <section ref={wrapperRef} className="hs-wrapper " data-cursor="#000">
+        <section ref={wrapperRef} className="hs-wrapper " data-cursor="white">
             <div ref={trackRef} className="hs-track">
-                <div className="hs-panel zero " data-cursor="#000">
+                <div className="hs-panel zero">
                     <PanelZero
                         hsTimeline={hsTimeline}
                         timelineReady={timelineReady}

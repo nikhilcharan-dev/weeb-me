@@ -12,45 +12,28 @@ export default function PanelZero({ hsTimeline, timelineReady }) {
         if (!timelineReady || !hsTimeline.current) return;
 
         const ctx = gsap.context(() => {
-            // 🔒 initial state
-            gsap.set(".p1-line", { scaleX: 0 });
-            gsap.set(".p1-title", { x: 300, opacity: 0 });
-            gsap.set(".p1-desc", { x: 200, opacity: 0 });
 
-            const start = "panel-1+=0.45";
+            const roles = gsap.utils.toArray(".role");
 
-            hsTimeline.current.to(
-                ".p1-line",
-                {
-                    scaleX: 1,
-                    transformOrigin: "left center",
-                    duration: 0.35,
-                    ease: "none",
-                },
-                start
-            );
+            roles.forEach((role, i) => {
+                const enterAt = `panel-0+=${i * 0.2}`;
+                const exitAt  = `panel-0+=${i * 0.2 + 0.2}`;
 
-            hsTimeline.current.to(
-                ".p1-title",
-                {
-                    x: 0,
+                hsTimeline.current
+                .to(role, {
+                    y: 0,
                     opacity: 1,
-                    duration: 0.4,
+                    duration: 0.2,
                     ease: "none",
-                },
-                start
-            );
+                }, enterAt)
+                .to(role, {
+                    y: -20,
+                    opacity: 0,
+                    duration: 0.2,
+                    ease: "none",
+                }, exitAt);
+            });
 
-            hsTimeline.current.to(
-                ".p1-desc",
-                {
-                    x: 0,
-                    opacity: 1,
-                    duration: 0.4,
-                    ease: "none",
-                },
-                "panel-1+=0.6"
-            );
         }, panelRef);
 
         return () => ctx.revert();
@@ -61,6 +44,15 @@ export default function PanelZero({ hsTimeline, timelineReady }) {
         <section ref={panelRef} className="panel-0 zero">
             <Navigation />
             <AnimatedText />
+            <div className="roles">
+                <span className="role">Coder</span>
+                <span className="role">Programmer</span>
+                <span className="role">Blockchain Developer</span>
+                <span className="role">Full-Stack Developer</span>
+                <span className="role">Gamer</span>
+                <span className="role">Anime Weeb</span>
+                <span className="role">Yeah! It's Me!!</span>
+            </div>
         </section>
     )
 }

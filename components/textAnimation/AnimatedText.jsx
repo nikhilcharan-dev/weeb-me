@@ -19,7 +19,6 @@ export default function AnimatedText() {
                     end: "top top",     // animation completes here
                     scrub: true,           // 🔥 scroll controls animation
                     // markers: true,
-                    // id: "name-intro"
                 },
             })
             .from(".l-1", {
@@ -50,6 +49,23 @@ export default function AnimatedText() {
                     ease: "none",
                 },
                 0
+            )
+            .from(
+                ".wings",
+                {
+                    opacity: 0,
+                    scale: 0.4,
+                    ease: "none",
+                },
+                0
+            )
+            .to(
+                ".wings",
+                {
+                    scale: 1,
+                    opacity: 0.5,
+                    ease: "none",
+                }
             );
         }, wrapperRef);
 

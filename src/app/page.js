@@ -81,7 +81,7 @@ export default function Home() {
     return (
         <>
             <Cursor />
-            <section className="section-default intro" data-cursor="#000">
+            <section className="section-default intro" data-cursor="black">
                 <h1 className="welcome-text title">Yawwwn!!</h1>
 
                 {videoSrc && (
