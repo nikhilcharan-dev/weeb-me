@@ -15,6 +15,7 @@ export default function PanelOne({ hsTimeline, timelineReady }) {
             gsap.set(".p1-line", { scaleX: 0 });
             gsap.set(".p1-title", { x: 300, opacity: 0 });
             gsap.set(".p1-desc", { x: 200, opacity: 0 });
+            gsap.set(".hero-p1", { scaleY: 0.7 });
 
             const start = "panel-1+=0.45";
 
@@ -67,7 +68,7 @@ export default function PanelOne({ hsTimeline, timelineReady }) {
                 {
                     x: 100,
                     y: 0,
-                    scaleX: 1,
+                    scaleY: 1,
                     opacity: 1,
                     duration: 1,
                 },

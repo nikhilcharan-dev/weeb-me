@@ -11,17 +11,15 @@ export default function AnimatedText() {
 
     useEffect(() => {
         const ctx = gsap.context(() => {
-
             gsap.timeline({
                 scrollTrigger: {
                     trigger: wrapperRef.current,
-                    start: "top center-=100",   // when section enters viewport
-                    end: "top top",     // animation completes here
-                    scrub: true,           // 🔥 scroll controls animation
+                    start: "top center-=100",
+                    end: "top top",
+                    scrub: true,
                     // markers: true,
                 },
             })
-
             .from(".l-1", {
                 x: 100,
                 y: -200,
@@ -43,7 +41,7 @@ export default function AnimatedText() {
                 0.15
             )
             .from(
-                ".icarus",
+                ".icarus-wrapper",
                 {
                     y: -550,
                     opacity: 0,
@@ -51,7 +49,7 @@ export default function AnimatedText() {
                     ease: "none",
                 },
                 0
-            )
+            );
         }, wrapperRef);
 
         return () => ctx.revert();
@@ -59,9 +57,11 @@ export default function AnimatedText() {
 
     return (
         <div ref={wrapperRef} className="text-wrapper">
-            <span className="text-layer l-1 image-text">NIKHIL</span>
+            <span className="text-layer l-1">NIKHIL</span>
             <span className="text-layer l-2">CHARAN</span>
-            <img src="/images/icarus.jpg" alt="icarus" className="icarus" />
+            <div className="icarus-wrapper">
+                <img src="/images/icarus.jpg" alt="icarus" className="icarus" />
+            </div>
         </div>
     );
 }

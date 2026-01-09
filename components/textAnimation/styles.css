@@ -6,8 +6,6 @@
   justify-content: center;
   align-items: center;
   background: black;
-
-
   overflow: hidden;
 }
 
@@ -32,14 +30,31 @@
   bottom: 5%;
 }
 
-.icarus {
+/* GSAP CONTROLS THIS */
+.icarus-wrapper {
   position: absolute;
   bottom: 10%;
   left: 2%;
-
-
-  height: 300px;
-  width: auto;
   z-index: 1;
 }
 
+/* CSS CONTROLS THIS */
+.icarus {
+  height: 300px;
+  width: auto;
+  animation: float 10s linear infinite;
+}
+
+@keyframes float {
+  0% {
+    opacity: 0.1;
+    transform: scale(0.9) translateY(-200%);
+  }
+  75% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(150%);
+  }
+}

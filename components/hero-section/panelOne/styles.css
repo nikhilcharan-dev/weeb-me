@@ -72,6 +72,7 @@
 }
 
 .p1-skills-inner li:hover {
+  cursor: pointer;
   color: white;
   background-color: black;
   backdrop-filter: blur(15px);
