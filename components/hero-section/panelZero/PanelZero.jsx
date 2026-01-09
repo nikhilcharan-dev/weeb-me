@@ -32,8 +32,8 @@ export default function PanelZero({ hsTimeline, timelineReady }) {
                     duration: 0.2,
                     ease: "none",
                 }, exitAt);
-            });
 
+            });
         }, panelRef);
 
         return () => ctx.revert();

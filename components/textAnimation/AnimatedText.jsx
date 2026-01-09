@@ -21,11 +21,13 @@ export default function AnimatedText() {
                     // markers: true,
                 },
             })
+
             .from(".l-1", {
                 x: 100,
                 y: -200,
+                scale: 0,
                 opacity: 0,
-                rotate: -60,
+                rotate: -180,
                 filter: "blur(8px)",
                 ease: "none",
             })
@@ -43,32 +45,14 @@ export default function AnimatedText() {
             .from(
                 ".icarus",
                 {
-                    y: -250,
+                    y: -550,
                     opacity: 0,
                     scale: 0.8,
                     ease: "none",
                 },
                 0
             )
-            .from(
-                ".wings",
-                {
-                    opacity: 0,
-                    scale: 0.4,
-                    ease: "none",
-                },
-                0
-            )
-            .to(
-                ".wings",
-                {
-                    scale: 1,
-                    opacity: 0.5,
-                    ease: "none",
-                }
-            );
         }, wrapperRef);
-
 
         return () => ctx.revert();
     }, []);

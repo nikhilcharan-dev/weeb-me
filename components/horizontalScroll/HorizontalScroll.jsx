@@ -1,5 +1,4 @@
 'use client';
-
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -20,7 +19,6 @@ export default function HorizontalScroll() {
         const ctx = gsap.context(() => {
             const panels = gsap.utils.toArray(".hs-panel");
 
-            // IMPORTANT: exclude PanelZero from horizontal motion
             const horizontalPanels = panels;
             const count = horizontalPanels.length;
 
