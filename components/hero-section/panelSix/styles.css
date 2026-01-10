@@ -1,0 +1,139 @@
+/* ===== Panel Six : Final CTA ===== */
+
+.panel-six {
+  width: 100vw;
+  height: 100vh;
+  padding: 6rem 6vw;
+  color: #fff;
+  display: flex;
+  align-items: center;
+}
+
+.panel-six-inner {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.p6-content {
+  max-width: 760px;
+}
+
+/* Status badge */
+.p6-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  opacity: 0.7;
+  margin-bottom: 2.5rem;
+}
+
+.p6-status .dot {
+  width: 8px;
+  height: 8px;
+  background: #4cff8f;
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(76, 255, 143, 0.9);
+}
+
+/* ===== UNIQUE H1 ===== */
+.p6-title {
+  font-size: clamp(3.2rem, 5vw, 4.8rem);
+  line-height: 1.05;
+  margin-bottom: 1.8rem;
+  overflow: hidden;
+}
+
+.p6-word-wrap {
+  display: inline-block;
+  overflow: hidden;
+  margin-right: 0.4rem;
+}
+
+.p6-word {
+  display: inline-block;
+}
+
+/* Subtext */
+.p6-sub {
+  font-size: 1.1rem;
+  opacity: 0.75;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+}
+
+/* ===== PRIMARY EMAIL CTA ===== */
+.p6-email {
+  font-size: 1.6rem;
+  font-weight: 600;
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.p6-email::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.p6-email:hover::after {
+  transform: scaleX(1);
+}
+
+.p6-email:hover {
+  text-shadow: 0 0 18px rgba(255,255,255,0.5);
+}
+
+/* Secondary links */
+.p6-links {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.p6-links a {
+  text-decoration: none;
+  color: #fff;
+  opacity: 0.7;
+  position: relative;
+}
+
+.p6-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 1px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s ease;
+}
+
+.p6-links a:hover {
+  opacity: 1;
+}
+
+.p6-links a:hover::after {
+  transform: scaleX(1);
+}
+
+/* Footer */
+.p6-foot {
+  font-size: 0.9rem;
+  opacity: 0.55;
+}
+

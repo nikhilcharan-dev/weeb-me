@@ -6,6 +6,12 @@ import "./styles.css";
 
 import PanelZero from "../hero-section/panelZero/PanelZero";
 import PanelOne from "../hero-section/panelOne/PanelOne";
+import PanelTwo from "../hero-section/panelTwo/PanelTwo";
+import PanelThree from "../hero-section/panelThree/PanelThree";
+import PanelFour from "../hero-section/panelFour/PanelFour";
+import PanelFive from "../hero-section/panelFive/PanelFive";
+import PanelSix from "../hero-section/panelSix/PanelSix";
+import PanelSeven from "../hero-section/panelSeven/PanelSeven";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -73,8 +79,46 @@ export default function HorizontalScroll() {
                     />
                 </div>
 
-                <div className="hs-panel">Panel Two</div>
-                <div className="hs-panel">Panel Three</div>
+                <div className="hs-panel two">
+                    <PanelTwo
+                        hsTimeline={hsTimeline}
+                        timelineReady={timelineReady}
+                    />
+                </div>
+
+                <div className="hs-panel three">
+                    <PanelThree
+                        hsTimeline={hsTimeline}
+                        timelineReady={timelineReady}
+                    />
+                </div>
+
+                <div className="hs-panel four">
+                    <PanelFour
+                        hsTimeline={hsTimeline}
+                        timelineReady={timelineReady}
+                    />
+                </div>
+                <div className="hs-panel five">
+                    <PanelFive
+                        hsTimeline={hsTimeline}
+                        timelineReady={timelineReady}
+                    />
+                </div>
+                <div className="hs-panel six">
+                    <PanelSix
+                        hsTimeline={hsTimeline}
+                        timelineReady={timelineReady}
+                    />
+                </div>
+                <div className="hs-panel seven">
+                    <PanelSeven
+                        hsTimeline={hsTimeline}
+                        timelineReady={timelineReady}
+                    />
+                </div>
+                <div className="hs-panel eight"></div>
+                <div className="hs-panel nine"></div>
             </div>
         </section>
     );

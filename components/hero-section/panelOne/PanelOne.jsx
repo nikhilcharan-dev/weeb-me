@@ -80,7 +80,7 @@ export default function PanelOne({ hsTimeline, timelineReady }) {
     }, [timelineReady]);
 
     return (
-        <section ref={panelRef} className="panel-one">
+        <section ref={panelRef} className="panel-one" data-cursor="white">
             <img src="/images/P0Hero.jpg" className="hero-p1" alt="Hero" />
             <div className="panel-one-inner">
                 <div className="p1-line" />
@@ -91,6 +91,7 @@ export default function PanelOne({ hsTimeline, timelineReady }) {
                 </p>
             </div>
             <div className="p1-skills">
+                <h1 className="skill-head">Expertise</h1>
                 <ul className="p1-skills-inner">
                     <li>C++</li>
                     <li>Python</li>
@@ -109,6 +110,7 @@ export default function PanelOne({ hsTimeline, timelineReady }) {
                     <li>Nginx</li>
                     <li>Github Actions</li>
                     <li>Oracle Cloud / AWS</li>
+                    <li>BlockChain</li>
                 </ul>
             </div>
         </section>

@@ -99,6 +99,7 @@ export default function Home() {
             </section>
 
             <HorizontalScroll />
+            <div className="bg-overlay" />
 
             <section className="section-default" data-cursor="#000">
                 End ↓

@@ -11,6 +11,7 @@
 }
 
 .hs-panel {
+  position: relative;
   width: 100vw;
   height: 100vh;
   flex-shrink: 0;
@@ -19,6 +20,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
+}
+
+.four {
+  width: 150vw;
+}
+
+.seven {
+  width: 125vw;
 }
 
 /* Mobile fallback */

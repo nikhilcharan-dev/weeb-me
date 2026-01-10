@@ -1,0 +1,113 @@
+.panel-five {
+  width: 100vw;
+  height: 100vh;
+  padding: 2rem 6vw;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: #fff;
+}
+
+.p5-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+.panel-five-inner {
+  position: relative;
+  max-width: 1400px;
+  margin: auto;
+}
+
+.p5-title {
+  font-size: clamp(3rem, 5vw, 4.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.p5-sub {
+  opacity: 0.7;
+  max-width: 600px;
+  margin-bottom: 3.5rem;
+}
+
+/* Resume */
+.p5-resume {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  text-decoration: none;
+  color: inherit;
+  margin-bottom: 4rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.p5-resume img {
+  width: 5%;
+  border-radius: 10px;
+}
+
+.p5-resume h2 {
+  font-size: 1.6rem;
+}
+
+.p5-resume span {
+  opacity: 0.7;
+  font-size: 0.9rem;
+}
+
+.p5-resume:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 45px rgba(255, 255, 255, 0.18);
+}
+
+/* Certifications Grid */
+.p5-cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.p5-cert-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 1rem;
+  text-decoration: none;
+  color: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.p5-cert-card img {
+  width: 30%;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.p5-cert-card h3 {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.p5-cert-date {
+  font-size: 0.75rem;
+  opacity: 0.6;
+  margin-top: 0.4rem;
+  display: block;
+}
+
+.p5-cert-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 0 35px rgba(255, 255, 255, 0.18);
+}
