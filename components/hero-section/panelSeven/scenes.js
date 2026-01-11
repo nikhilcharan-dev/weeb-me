@@ -302,6 +302,15 @@ const sceneFour = {
             exit: { x: -111, y: 143, scale: 0.14, opacity: 0 },
         },
         {
+            type: "image",
+            id: "flower_angel.png",
+            path: "/ruru/flower_angel.png",
+            from: Top,
+            to: { x: 614, y: -239, scale: 0.10, opacity: 1 },
+            hold: 2,
+            exit: { x: 614, y: -239, scale: 0.10, opacity: 0 },
+        },
+        {
             type: "text",
             id: "scene4-line-1",
             text: "What stayed, stayed.",

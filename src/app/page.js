@@ -120,7 +120,7 @@ export default function Home() {
 
             <section
                 id="ending-trigger"
-                style={{height: "100vh"}}
+                style={{height: "500vh"}}
                 aria-hidden
             />
 

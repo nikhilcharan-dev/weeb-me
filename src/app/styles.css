@@ -16,10 +16,7 @@
 .ending-section {
   position: relative;
   height: 100vh;
-  border-top: 5px solid black;
-  background-color: red;
 }
-
 
 .clipped-video {
   margin-right: 15vw;
