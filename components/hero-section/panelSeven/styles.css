@@ -3,43 +3,61 @@
   width: 100vw;
   height: 100vh;
   overflow: hidden;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  cursor: url("/cursor/feather.cur"), auto;
   background: white;
 
-  border: 1px solid black;
+  cursor: url("/cursor/feather.cur"), auto;
 }
 
-/* overlay */
 .p7-overlay {
   position: absolute;
   inset: 0;
-  margin: auto;
   z-index: 1;
+  transform-origin: center center;
 }
 
-/* images */
 .p7-image {
   position: absolute;
   top: 50%;
   left: 50%;
   z-index: 3;
   pointer-events: none;
-  will-change: transform, opacity;
+}
+
+.scene-title {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 73px;
+  font-weight: 300;
+  letter-spacing: 2px;
+  text-align: center;
+  opacity: 0;
+  z-index: 100;
+  color: black;
+  pointer-events: none;
+}
+
+.scene-text {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  opacity: 0;
+  color: black;
+  max-width: 600px;
+  text-align: center;
+  z-index: 1000;
 }
 
 .debug-grid {
   position: absolute;
   inset: 0;
-  pointer-events: none;
   background-size: 100px 100px;
   background-image:
           linear-gradient(to right, rgba(0,0,0,0.05) 1px, transparent 1px),
           linear-gradient(to bottom, rgba(0,0,0,0.05) 1px, transparent 1px);
+  pointer-events: none;
   z-index: 999;
 }
-

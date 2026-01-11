@@ -162,10 +162,10 @@ export default function PanelSceneTuner() {
                             className={`tuner-image ${active === name ? "active" : ""}`}
                             style={{
                                 transform: `
-                  translate(-50%, -50%)
-                  translate(${data.x}px, ${data.y}px)
-                  scale(${data.scale})
-                `,
+                                  translate(-50%, -50%)
+                                  translate(${data.x}px, ${data.y}px)
+                                  scale(${data.scale})
+                                `,
                             }}
                             onClick={() => setActive(name)}
                             alt=""

@@ -148,7 +148,7 @@ export default function PanelSix({ hsTimeline, timelineReady }) {
             <div className="fang-narration">
                 <p className="fang-line f1">I am not afraid of failure.</p>
                 <p className="fang-line f2">Because failure is just another step</p>
-                <p className="fang-line f3">toward my goal.</p>
+                <p className="fang-line f3">towards my goal.</p>
             </div>
 
             {/* ===== IMAGE ===== */}

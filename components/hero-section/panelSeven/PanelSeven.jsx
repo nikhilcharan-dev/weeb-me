@@ -12,80 +12,100 @@ export default function PanelSeven() {
     const panelRef = useRef(null);
     const overlayRef = useRef(null);
     const imagesRef = useRef({});
-    const timeline = useRef(null);
+    const textRef = useRef({});
+    const titleRef = useRef({});
 
     useEffect(() => {
+
         const ctx = gsap.context(() => {
 
-            // 🔑 lock coordinate system (MATCHES TUNER)
-            Object.values(imagesRef.current).forEach((img) => {
-                gsap.set(img, {
-                    xPercent: -50,
-                    yPercent: -50,
-                    opacity: 0,
-                });
-            });
+            Object.values(imagesRef.current).forEach((el) =>
+                gsap.set(el, { xPercent: -50, yPercent: -50, opacity: 0 })
+            );
 
-            // overlay initial
+            Object.values(textRef.current).forEach((el) =>
+                gsap.set(el, { opacity: 0 })
+            );
+
+            Object.values(titleRef.current).forEach((el) =>
+                gsap.set(el, { opacity: 0 })
+            );
+
             gsap.set(overlayRef.current, {
-                width: "0%",
-                height: "0%",
+                scaleX: 0,
+                scaleY: 0,
                 backgroundColor: "#000",
+                transformOrigin: "50% 50%",
             });
 
             const tl = gsap.timeline({
                 scrollTrigger: {
                     trigger: panelRef.current,
                     start: "top top",
-                    end: "+=3000", // tune freely
+                    end: "+=10000",
                     pin: true,
                     scrub: 1,
-                    anticipatePin: 1,
                 },
             });
 
-            timeline.current = tl;
-
-            // overlay animation
             tl.to(overlayRef.current, {
-                width: "100%",
-                height: "100%",
+                scaleX: 1,
+                scaleY: 1,
                 duration: 1,
                 ease: "power2.out",
-            });
-
-            tl.to(overlayRef.current, {
+            })
+            .to(overlayRef.current, {
                 backgroundColor: "#E5DDD3",
                 duration: 0.6,
-                ease: "power1.out",
             });
 
-            // SCENES
-            scenes.forEach((round, sceneIndex) => {
-                const sceneLabel = `scene-${sceneIndex}`;
-                tl.addLabel(sceneLabel);
+            scenes.forEach((scene, i) => {
+                const label = `scene-${i}`;
+                tl.addLabel(label);
 
-                round.forEach((img) => {
-                    const el = imagesRef.current[img.id];
-                    if (!el) return;
-
-                    // ENTER (parallel)
+                /* ---------- TITLE ---------- */
+                const titleEl = titleRef.current[scene.title.text];
+                if (titleEl) {
                     tl.fromTo(
-                        el,
-                        img.from,
-                        { ...img.to, duration: 2, ease: "power3.out" },
-                        sceneLabel
+                        titleEl,
+                        scene.title.from,
+                        { ...scene.title.to, duration: 1 },
+                        label
                     );
 
-                    // EXIT (parallel)
+                    tl.to(
+                        titleEl,
+                        { ...scene.title.exit, duration: 0.8 },
+                        `${label}+=${scene.title.hold}`
+                    );
+                }
+
+                /* ---------- ITEMS (images + text) ---------- */
+                scene.items.forEach((item) => {
+                    const el =
+                        item.type === "image"
+                            ? imagesRef.current[item.id]
+                            : textRef.current[item.id];
+
+                    if (!el) return;
+
+                    // ENTER
+                    tl.fromTo(
+                        el,
+                        item.from,
+                        { ...item.to, duration: 2, ease: "power3.out" },
+                        `${label}+=${scene.title.hold + 0.5}`
+                    );
+
+                    // EXIT
                     tl.to(
                         el,
-                        { ...img.exit, duration: 2, ease: "power3.in" },
-                        `${sceneLabel}+=${2 + img.hold}`
+                        { ...item.exit, duration: 1.5, ease: "power3.in" },
+                        `${label}+=${scene.title.hold + item.hold}`
                     );
                 });
 
-                // scene gap
+                // scene pause
                 tl.to({}, { duration: 1 });
             });
 
@@ -99,15 +119,43 @@ export default function PanelSeven() {
             <div ref={overlayRef} className="p7-overlay" />
             {/*<div className="debug-grid" />*/}
 
-            {scenes.flat().map((img) => (
-                <img
-                    key={img.id}
-                    ref={(el) => el && (imagesRef.current[img.id] = el)}
-                    src={img.path}
-                    className="p7-image"
-                    alt=""
-                />
+            {scenes.map((scene, i) => (
+                <h2
+                    key={scene.title.text + i}
+                    ref={(el) => el && (titleRef.current[scene.title.text] = el)}
+                    className="scene-title"
+                >
+                    {scene.title.text}
+                </h2>
             ))}
+
+            {scenes.flatMap((s) => s.items).map((item, i) => {
+                if (item.type === "image") {
+                    return (
+                        <img
+                            key={item.id + i}
+                            ref={(el) => el && (imagesRef.current[item.id] = el)}
+                            src={item.path}
+                            className="p7-image"
+                            alt=""
+                        />
+                    );
+                }
+
+                if (item.type === "text") {
+                    return (
+                        <p
+                            key={item.id + i}
+                            ref={(el) => el && (textRef.current[item.id] = el)}
+                            className="scene-text"
+                        >
+                            {item.text}
+                        </p>
+                    );
+                }
+
+                return null;
+            })}
         </section>
     );
 }
