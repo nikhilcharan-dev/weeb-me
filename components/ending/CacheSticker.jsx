@@ -3,8 +3,8 @@ import { useTexture } from "@react-three/drei";
 const vintageStickers = [
     "a_tree.png",
     "angels_on_clouds.png",
-    "bouque.png",
     "bouque_2.png",
+    "bouque.png",
     "bunnies_swinging.png",
     "catz_1.png",
     "catz_2.png",
@@ -68,6 +68,6 @@ const animeStickers = Array.from({ length: 48 }, (_, i) => `img_${i + 1}.jpg`);
 
 export function StickerPreload() {
     useTexture.preload(vintageStickers.map(s => `/ruru/${s}`));
-    useTexture.preload(animeStickers.map(s => `/ruru/anime/${s}`));
+    useTexture.preload(animeStickers.map(s => `/anime/${s}`));
     return null;
 }
