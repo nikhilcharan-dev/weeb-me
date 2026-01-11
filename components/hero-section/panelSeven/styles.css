@@ -35,14 +35,14 @@
   opacity: 0;
   z-index: 100;
   color: black;
-  pointer-events: none;
+  /*pointer-events: none;*/
 }
 
 .scene-text {
   position: absolute;
-  top: 65%;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   font-size: 20px;
   opacity: 0;
   color: black;

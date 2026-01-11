@@ -42,7 +42,7 @@ export default function PanelSeven() {
                 scrollTrigger: {
                     trigger: panelRef.current,
                     start: "top top",
-                    end: "+=10000",
+                    end: "+=20000",
                     pin: true,
                     scrub: 1,
                 },
@@ -136,7 +136,7 @@ export default function PanelSeven() {
                             key={item.id + i}
                             ref={(el) => el && (imagesRef.current[item.id] = el)}
                             src={item.path}
-                            className="p7-image"
+                            className={`p7-image ${item.id.split('.')[0]}`}
                             alt=""
                         />
                     );

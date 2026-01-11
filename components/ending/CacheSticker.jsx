@@ -69,5 +69,6 @@ const animeStickers = Array.from({ length: 48 }, (_, i) => `img_${i + 1}.jpg`);
 export function StickerPreload() {
     useTexture.preload(vintageStickers.map(s => `/ruru/${s}`));
     useTexture.preload(animeStickers.map(s => `/anime/${s}`));
+    console.log("StickerPreload loaded");
     return null;
 }

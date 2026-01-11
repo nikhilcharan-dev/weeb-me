@@ -7,11 +7,12 @@ import { TextPlugin, } from "gsap/TextPlugin";
 
 import Cursor from "../../components/cursor/Cursor";
 import HorizontalScroll from "../../components/horizontalScroll/HorizontalScroll";
-import EndScene from '../../components/ending/EndScene';
-import EndingOverlay from '../../components/ending/EndingOverlay';
 
+import { StickerPreload } from "../../components/ending/CacheSticker";
+
+import EndScene from "../../components/ending/EndScene";
+import EndingOverlay from '../../components/ending/EndingOverlay';
 import './styles.css'
-import {StickerPreload} from "../../components/ending/CacheSticker";
 
 const videos = ["hero", "ruru", "serene", "dragon", "nova"];
 
@@ -25,8 +26,6 @@ export default function Home() {
             `/videos/${videos[Math.floor(Math.random() * videos.length)]}.mp4`
         );
 
-        document.body.style.pointerEvents = "none";
-
         gsap.fromTo(
             ".welcome-text",
             { opacity: 0, y: 40 },
@@ -35,9 +34,6 @@ export default function Home() {
                 y: 0,
                 duration: 1,
                 ease: "power2.out",
-                onComplete: () => {
-                    document.body.style.pointerEvents = "auto";
-                }
             }
         );
 
@@ -81,9 +77,16 @@ export default function Home() {
 
         ScrollTrigger.create({
             trigger: "#ending-trigger",
-            start: "top center",
-            once: true,
-            onEnter: () => setShowEnding(true),
+            start: "bottom bottom",
+            onEnter: () => {
+                setShowEnding(true)
+            },
+            onEnterBack: () => {
+                setShowEnding(true)
+            },
+            onLeaveBack: () => {
+                setShowEnding(false)
+            },
         });
 
 
@@ -112,19 +115,23 @@ export default function Home() {
             </section>
 
             <HorizontalScroll/>
-            <section style={{height: "2000vh"}} aria-hidden={true}/>
+
+            <section style={{height: "2000vh"}} aria-hidden={false}/>
+
             <section
                 id="ending-trigger"
                 style={{height: "100vh"}}
                 aria-hidden
             />
+
             {showEnding && (
-                <>
+                <section id="ending"
+                         className="ending-section">
                     <EndScene/>
                     <EndingOverlay/>
-                </>
+                    HIii
+                </section>
             )}
-
         </>
     );
 }

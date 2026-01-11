@@ -18,7 +18,10 @@ const images = [
     "clouds_1.png",
     "clouds_2.png",
     "clouds_3.jpg",
+    "cloud_4.png",
     "clouds_decor.png",
+
+    "ceilings_war.png",
 
     "crown.png",
     "cupid_god.png",
@@ -34,6 +37,7 @@ const images = [
 
     "empty_yet_full.png",
 
+    "flower_angel.png",
     "feather_decor.png",
     "feather_hand.png",
 
@@ -56,10 +60,13 @@ const images = [
     "mushrooms.png",
 
     "nova_falling.png",
+    "nova_halo.png",
+    "nova_hut.png",
 
     "our_faith.png",
 
     "peacock.png",
+    "palace.png",
 
     "rabbit_sorcerer.jpg",
     "rabbit_violinist.png",
@@ -69,11 +76,18 @@ const images = [
     "rose.png",
     "roses_side.png",
 
+    "river.png",
+
+    "ruru.png",
     "ruru_dancing.png",
     "ruru_eyes.png",
     "ruru_no_mercy.png",
     "ruru_reading.png",
     "ruru_smiling.png",
+    "ruru_angel.png",
+    "ruru_books.png",
+    "ruru_window.png",
+    "ruru_hut.png",
 
     "spider_me.png",
 
@@ -82,6 +96,7 @@ const images = [
     "sun_moon.png",
 
     "teddy.png",
+    "torn_pages.png",
 
     "us_as_catzz.png",
 
@@ -92,7 +107,7 @@ const images = [
     "who_might_it_be.png",
 
     "wings.png",
-
+    "wind.png",
     "wine_1.png",
     "wine_2.png",
 ];

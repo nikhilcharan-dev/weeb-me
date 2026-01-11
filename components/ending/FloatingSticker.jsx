@@ -67,7 +67,7 @@ export default function FloatingSticker({ src }) {
         }
 
         // ----- SIZE NORMALIZATION -----
-        const scale = 0.35 + Math.random() * 0.3;
+        const scale = 0.4 + Math.random() * 0.3;
 
         return {
             x,

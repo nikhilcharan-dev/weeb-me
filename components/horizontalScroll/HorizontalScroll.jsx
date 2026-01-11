@@ -153,7 +153,6 @@ export default function HorizontalScroll() {
                 <div className="hs-panel eight">
                     <PanelSeven />
                 </div>
-                {/*<div className="hs-panel nine"></div>*/}
             </section>
         </>
     );

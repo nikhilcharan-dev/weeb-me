@@ -17,8 +17,8 @@ export default function EndingOverlay() {
             </p>
 
             <div className="ending-actions">
-                <a href="/resume.pdf" target="_blank">View Resume</a>
-                <a href="mailto:you@email.com">Contact Me</a>
+                <a href="https://drive.google.com/file/d/1fOAL00BsaVEz0k9fc5M_7UBLfFLpyyTq/view?usp=drive_link" target="_blank">View Resume</a>
+                <a href="mailto:nikhilcharangollapalli@email.com">Contact Me</a>
             </div>
 
             <span className="thanks">Thank you for staying till the end.</span>
