@@ -99,11 +99,11 @@ export default function Home() {
             </section>
 
             <HorizontalScroll />
-            <div className="bg-overlay" />
-
+            <section style={{ height: "2000vh" }}  aria-hidden={true} />
             <section className="section-default" data-cursor="#000">
                 End ↓
             </section>
+
         </>
     );
 }

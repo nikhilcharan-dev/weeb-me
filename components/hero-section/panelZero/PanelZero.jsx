@@ -45,12 +45,12 @@ export default function PanelZero({ hsTimeline, timelineReady }) {
             <Navigation />
             <AnimatedText />
             <div className="roles">
+                <span className="role">Gamer</span>
                 <span className="role">Coder</span>
                 <span className="role">Programmer</span>
                 <span className="role">Blockchain Developer</span>
                 <span className="role">Full-Stack Developer</span>
-                <span className="role">Gamer</span>
-                <span className="role">Anime Weeb</span>
+                <span className="role">Anime Otaku</span>
                 <span className="role">Yeah! It's Me!!</span>
             </div>
         </section>
