@@ -1,0 +1,70 @@
+.panel-seven-footer {
+  width: 100vw;
+  height: 100vh;
+  background: black;
+  color: #e6e6e6;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 8vw;
+  position: relative;
+  overflow: hidden;
+}
+
+/* CONTENT */
+.p7-inner {
+  min-height: 180px;
+  max-width: 520px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.p7-name {
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  opacity: 0.9;
+}
+
+.p7-line {
+  font-size: 16px;
+  line-height: 1.6;
+  opacity: 0.75;
+}
+
+.p7-meta {
+  font-size: 12px;
+  opacity: 0.45;
+  letter-spacing: 0.4px;
+}
+
+/* =====================
+   OVERLAY IMAGES
+===================== */
+
+.p7-img {
+  position: absolute;
+  pointer-events: none;
+  filter: blur(0.2px);
+}
+
+/* Angels – distant */
+.p7-angels {
+  width: 320px;
+  top: -100%;
+  left: 50%;
+  z-index: 1;
+  opacity: 0.35;
+}
+
+/* Flower – near */
+.p7-decor {
+  width: 120px;
+  top: -100%;
+  left: 50%;
+  z-index: 2;
+  opacity: 0.45;
+}

@@ -47,6 +47,12 @@ const PanelSeven = dynamic(
     { ssr: false }
 );
 
+const Footer = dynamic(
+    () => import("../footer/Footer"),
+    { ssr: false }
+);
+
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -146,7 +152,11 @@ export default function HorizontalScroll() {
                             timelineReady={timelineReady}
                         />
                     </div>
-                    <div className="hs-panel seven"></div>
+                    <div className="hs-panel seven">
+                        <Footer hsTimeline={hsTimeline}
+                                timelineReady={timelineReady}
+                        />
+                    </div>
                 </div>
             </section>
             <section className="hs-wrapper" data-cursor="transparent">

@@ -9,7 +9,7 @@ export default function PanelSix({ hsTimeline, timelineReady }) {
     const titleRef = useRef(null);
     const [copied, setCopied] = useState(false);
 
-    const email = "nikhilcharangollapalli@example.com";
+    const email = "nikhilcharangollapalli@gmail.com";
 
     useEffect(() => {
         if (!timelineReady || !hsTimeline?.current) return;
@@ -125,17 +125,29 @@ export default function PanelSix({ hsTimeline, timelineReady }) {
                     </h1>
 
                     <p className="p6-sub p6-item">
-                        I work on systems that scale cleanly, fail gracefully,
+                        I work on systems that scale cleanly, fail gracefully, <br />
                         and actually reach production.
                     </p>
 
                     <button onClick={copyEmail} className="p6-email p6-item">
+                        <img className="icon mail" src="/images/gmail.png" alt="Github"/>
                         {copied ? "Email Copied ✓" : email}
                     </button>
 
                     <div className="p6-links p6-item">
-                        <a href="https://github.com/nikhilcharan-dev" target="_blank">GitHub</a>
-                        <a href="https://www.linkedin.com/in/shadow01" target="_blank">LinkedIn</a>
+                        <div>
+                            <a href="https://github.com/nikhilcharan-dev" target="_blank">
+                                <img className="icon" src="/images/github.png" alt="Github"/>
+                                GitHub
+                            </a>
+                        </div>
+                        <div>
+
+                            <a href="https://www.linkedin.com/in/shadow01" target="_blank">
+                                <img className="icon" src="/images/linkedin.png" alt="LinkedIn"/>
+                                LinkedIn
+                            </a>
+                        </div>
                     </div>
 
                     <p className="p6-foot p6-item">

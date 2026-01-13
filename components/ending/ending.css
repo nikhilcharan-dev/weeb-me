@@ -1,58 +1,124 @@
+/* =========================
+   ENDING SCENE WRAPPER
+========================= */
+
 .ending-wrapper {
   position: fixed;
   inset: 0;
   z-index: 1;
+  overflow: hidden;
 }
+
+
+/* =========================
+   OVERLAY (TEXT LAYER)
+========================= */
 
 .ending-overlay {
   position: fixed;
   inset: 0;
   z-index: 10;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  pointer-events: none;
+
   text-align: center;
   color: #1e1e1e;
+
+  pointer-events: none;
+
+  /* subtle cinematic polish */
+  backdrop-filter: saturate(0.98);
 }
+
+
+/* =========================
+   NAME (PRIMARY FOCUS)
+========================= */
 
 .ending-overlay h1 {
-  font-size: 48px;
-  font-weight: 400;
-  letter-spacing: 2px;
+  margin: 0;
+
+  font-size: 52px;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+
+  will-change: transform;
 }
+
+
+/* =========================
+   SUBTITLE
+========================= */
 
 .subtitle {
-  margin-top: 6px;
-  font-size: 14px;
-  opacity: 0.6;
+  margin-top: 8px;
+
+  font-size: 13px;
+  letter-spacing: 0.08em;
+
+  opacity: 0.55;
 }
+
+
+/* =========================
+   CLOSING STATEMENT
+========================= */
 
 .closing-line {
-  margin-top: 32px;
-  font-size: 18px;
-  line-height: 1.6;
-  opacity: 0.85;
+  margin-top: 36px;
+
+  max-width: 520px;
+
+  font-size: 17px;
+  line-height: 1.7;
+
+  opacity: 0.82;
 }
 
+
+/* =========================
+   ACTION LINKS
+========================= */
+
 .ending-actions {
-  margin-top: 32px;
+  margin-top: 36px;
+
   display: flex;
-  gap: 24px;
+  gap: 28px;
+
   pointer-events: auto;
 }
 
 .ending-actions a {
+  font-size: 14px;
+  letter-spacing: 0.05em;
+
   text-decoration: none;
   color: #1e1e1e;
-  border-bottom: 1px solid rgba(0,0,0,0.2);
-  padding-bottom: 2px;
-  font-size: 14px;
+
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  padding-bottom: 3px;
+
+  transition: opacity 0.35s ease;
 }
 
+.ending-actions a:hover {
+  opacity: 0.65;
+}
+
+
+/* =========================
+   FINAL THANK YOU
+========================= */
+
 .thanks {
-  margin-top: 48px;
-  font-size: 12px;
-  opacity: 0.4;
+  margin-top: 52px;
+
+  font-size: 11px;
+  letter-spacing: 0.1em;
+
+  opacity: 0.35;
 }

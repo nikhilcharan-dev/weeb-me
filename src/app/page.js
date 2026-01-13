@@ -8,9 +8,6 @@ import { TextPlugin, } from "gsap/TextPlugin";
 import Cursor from "../../components/cursor/Cursor";
 import HorizontalScroll from "../../components/horizontalScroll/HorizontalScroll";
 
-import { StickerPreload } from "../../components/ending/CacheSticker";
-
-import EndScene from "../../components/ending/EndScene";
 import EndingOverlay from '../../components/ending/EndingOverlay';
 import './styles.css'
 
@@ -65,11 +62,11 @@ export default function Home() {
         })
         .to(".scroll-text", {
             filter: "blur(8px)",
-        })
+        }, "-=1")
         .to(".scroll-text", {
             opacity: 0,
             text: "Scroll to view",
-        })
+        }, "-=0.5")
         .to(".scroll-text", {
             opacity: 1,
             filter: "blur(0px)",
@@ -96,7 +93,6 @@ export default function Home() {
     return (
         <>
             <Cursor/>
-            <StickerPreload/>
             <section className="section-default intro" data-cursor="black">
                 <h1 className="welcome-text title">Yawwwn!!</h1>
 
@@ -127,9 +123,7 @@ export default function Home() {
             {showEnding && (
                 <section id="ending"
                          className="ending-section">
-                    <EndScene/>
                     <EndingOverlay/>
-                    HIii
                 </section>
             )}
         </>
