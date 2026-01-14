@@ -93,6 +93,9 @@ export default function Home() {
             start: "bottom bottom",
             onEnter: () => {
                 setShowEnding(true)
+                fetch("/api/ending-visit", {
+                    method: "POST",
+                });
             },
             onEnterBack: () => {
                 setShowEnding(true)
