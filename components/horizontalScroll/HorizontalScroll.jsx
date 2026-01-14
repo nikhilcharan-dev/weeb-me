@@ -3,6 +3,7 @@
 import {useEffect, useRef, useState} from "react";
 import gsap from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import "./styles.css";
 
 import dynamic from "next/dynamic";
@@ -54,7 +55,7 @@ const Footer = dynamic(
 
 
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export default function HorizontalScroll() {
     const wrapperRef = useRef(null);
@@ -70,6 +71,7 @@ export default function HorizontalScroll() {
 
             hsTimeline.current = gsap.timeline({
                 scrollTrigger: {
+                    id: "horizontal-scroll",
                     trigger: wrapperRef.current,
                     pin: true,
                     scrub: 1,

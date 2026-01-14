@@ -428,7 +428,7 @@ const sceneFive = {
             from: { x: 197, y: -178, scale: 0, opacity: 0 },
             to: { x: 197, y: -178, scale: 0.14, opacity: 1 },
             hold: 2,
-            exit: { x: 197, y: -178, scale: 0.2, opacity: 0 },
+            exit: { x: 197, y: -178, scale: 1.6, opacity: 0 },
         },
         {
             type: "image",
