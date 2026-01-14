@@ -23,6 +23,22 @@ export default function Home() {
             `/videos/${videos[Math.floor(Math.random() * videos.length)]}.mp4`
         );
 
+        const key = "nova-portfolio-visits";
+        const prev = Number(localStorage.getItem(key) || Math.random() * (10 ** 3));
+        const next = prev + 1;
+        localStorage.setItem(key, next.toString());
+
+        gsap.fromTo(
+            ".visit-count",
+            { innerText: 0 },
+            {
+                innerText: next,
+                duration: 1.5,
+                ease: "power2.out",
+                snap: { innerText: 1 },
+            }
+        );
+
         gsap.fromTo(
             ".welcome-text",
             { opacity: 0, y: 40 },
@@ -95,6 +111,10 @@ export default function Home() {
             <Cursor/>
             <section className="section-default intro" data-cursor="black">
                 <h1 className="welcome-text title">Yawwwn!!</h1>
+                <div className="visit-counter">
+                    <span className="visit-label">visits</span>
+                    <span className="visit-count">0</span>
+                </div>
 
                 {videoSrc && (
                     <video
