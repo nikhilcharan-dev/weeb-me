@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { TextPlugin, } from "gsap/TextPlugin";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {TextPlugin,} from "gsap/TextPlugin";
 
 import Cursor from "@/components/cursor/Cursor";
 import HorizontalScroll from "@/components/horizontalScroll/HorizontalScroll";
@@ -23,6 +23,10 @@ export default function Home() {
             `/videos/${videos[Math.floor(Math.random() * videos.length)]}.mp4`
         );
 
+        fetch("/api/view", {
+            method: "POST",
+        });
+
         const key = "nova-portfolio-visits";
         const prev = Number(localStorage.getItem(key) || Math.random() * (10 ** 3));
         const next = prev + 1;
@@ -30,18 +34,18 @@ export default function Home() {
 
         gsap.fromTo(
             ".visit-count",
-            { innerText: 0 },
+            {innerText: 0},
             {
                 innerText: next,
                 duration: 1.5,
                 ease: "power2.out",
-                snap: { innerText: 1 },
+                snap: {innerText: 1},
             }
         );
 
         gsap.fromTo(
             ".welcome-text",
-            { opacity: 0, y: 40 },
+            {opacity: 0, y: 40},
             {
                 opacity: 1,
                 y: 0,
@@ -90,7 +94,7 @@ export default function Home() {
 
         ScrollTrigger.create({
             trigger: "#ending-trigger",
-            start: "bottom bottom",
+            start: "bottom+=100vh bottom",
             onEnter: () => {
                 setShowEnding(true)
                 fetch("/api/ending-visit", {
@@ -139,8 +143,7 @@ export default function Home() {
 
             <section
                 id="ending-trigger"
-                style={{height: "500vh"}}
-                aria-hidden
+                style={{height: "600vh"}}
             />
 
             {showEnding && (
@@ -149,6 +152,9 @@ export default function Home() {
                     <EndingOverlay/>
                 </section>
             )}
+            <section
+                style={{height: "50vh"}}
+            />
         </>
     );
 }
