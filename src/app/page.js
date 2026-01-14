@@ -1,5 +1,6 @@
 import redis from "@/lib/redis";
 import Home from "./app";
+import { Analytics } from "@vercel/analytics/next"
 
 export default async function HomePage() {
     await redis.incr("portfolio:visits");
@@ -9,5 +10,10 @@ export default async function HomePage() {
     );
 
     await redis.ltrim("portfolio:visit_times", 0, 199);
-    return <Home />;
+    return (
+        <>
+            <Home />
+            <Analytics />
+        </>
+    );
 }
