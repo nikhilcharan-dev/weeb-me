@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata = {
     title: "Portfolio",
-    description: "This is my portfolio, It digitalises my journey.",
+    description: "A living record of growth, exploration, and problem solving. This portfolio captures the moments, experiments, and lessons that shaped how I think, build, and learn through technology.",
     icons: {
         icon: "/images/icon.png",
     },
