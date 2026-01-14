@@ -28,6 +28,26 @@ export default function EndingOverlay() {
                 repeat: -1,
                 yoyo: true,
             });
+
+            const spidy = rootRef.current.querySelector('.spidy');
+
+            gsap.to(spidy, {
+                rotation: 6,
+                x: 18,
+                duration: 3.8,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1,
+            });
+
+            gsap.to(spidy, {
+                scale: 1.035,
+                duration: 4.5,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1,
+            });
+
         }, rootRef);
 
         return () => ctx.revert();
@@ -62,6 +82,8 @@ export default function EndingOverlay() {
             <span className="thanks">
                 Thank you for staying till the end.
             </span>
+
+            <img className="spidy" src="/ruru/spider_me.png" alt="spider-man" />
         </div>
     );
 }

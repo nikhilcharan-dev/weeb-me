@@ -122,3 +122,18 @@
 
   opacity: 0.35;
 }
+
+.spidy {
+  position: absolute;
+  top: -40px;               /* hangs from ceiling */
+  right: 8%;
+
+  height: 500px;
+  width: auto;
+
+  transform-origin: top center;
+  will-change: transform;
+
+  pointer-events: none;
+  opacity: 0.95;
+}

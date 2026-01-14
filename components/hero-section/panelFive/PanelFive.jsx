@@ -41,6 +41,30 @@ const certifications = [
         date: "Sep 25, 2025",
         link: "https://drive.google.com/file/d/1v3qqe0TtUbLfGWebFNgo7DdT3nBJ81Eq/view",
     },
+    {
+        title: "React",
+        image: "/images/react.png",
+        date: "Dec 2, 2024",
+        link: "https://drive.google.com/file/d/1nT430P6gANFoBb299qsqgDzr43Gh7LMr/view?usp=drive_link",
+    },
+    {
+        title: "Full Stack Development",
+        image: "/images/fsd.png",
+        date: "Dec 25, 2025",
+        link: "https://drive.google.com/file/d/1ltxQH-3kWbUl6_ZIMFUISX89DoFoTJlb/view?usp=drive_link",
+    },
+    {
+        title: "Postman API",
+        image: "/images/postman.png",
+        date: "Dec 2, 2024",
+        link: "https://drive.google.com/file/d/1CpTn5J8c7iV3c7yD_q0uLAATqcPcBX8e/view?usp=drive_link",
+    },
+    {
+        title: "Time Complexity",
+        image: "/images/tc.png",
+        date: "April 15, 2024",
+        link: "https://drive.google.com/file/d/1kXqM0cZ3hPskmcUIWH31KQleqOj1hJqV/view?usp=drive_link",
+    },
 ];
 
 export default function PanelFive({ hsTimeline, timelineReady }) {

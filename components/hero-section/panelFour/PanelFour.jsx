@@ -15,21 +15,22 @@ const timelineItems = [
     },
     {
         title: "2nd Sem",
-        subtitle: "Ignite Coder · DSA",
+        subtitle: "Ignite Coder · Data Structures & Algorithms",
     },
     {
         title: "3rd Sem",
         subtitle:
-            "Bamboo Coders · Java, Python, ADSA · HTML, CSS, JS · Self-learned React & Node",
+            "Bamboo Coders · Java · Python · ADSA · HTML · CSS · JavaScript · Self-learned React & Node",
     },
     {
         title: "4th Sem",
         subtitle:
-            "SkillUp (OS, DBMS) · Owl Coder 4.0 (Competitive Programming)",
+            "SkillUp · OS · DBMS · Owl Coder 4.0 · Competitive Programming",
     },
     {
         title: "5th–6th Sem",
-        subtitle: "Drive Ready (MERN) · Owl Coder 5.0 (Current)",
+        subtitle:
+            "Drive Ready · MERN Stack · Owl Coder 5.0 · Industry Preparation",
     },
 ];
 
@@ -43,45 +44,65 @@ export default function PanelFour({ hsTimeline, timelineReady }) {
             const items = gsap.utils.toArray(".p4-item");
             const total = items.length;
 
+            // ===== 🎛️ ADJUST THESE =====
+            const PANEL_ENTER_OFFSET = 0.5; // when animations start
+            const PANEL_EXIT_OFFSET  = 0.3; // when animations finish
+            const ITEM_REVEAL_SPREAD = 5.0;  // spacing tightness
+            // ==========================
+
+            const usableRange = 1 - PANEL_ENTER_OFFSET - PANEL_EXIT_OFFSET;
+
+            const directions = [
+                { x: -400, y: 0 },
+                { x: 400, y: 0 },
+                { x: 0, y: 400 },
+                { x: 0, y: -400 },
+                { x: -300, y: 200 },
+                { x: 300, y: 200 },
+            ];
+
             gsap.set(".p4-h-line", {
                 scaleX: 0,
                 transformOrigin: "left center",
             });
 
-            gsap.set(items, {
-                opacity: 0,
-                y: 30,
-            });
-
             items.forEach((item, i) => {
-                const progress = (i + 1) / total;
-                const baseTime = 0.4 + i * 0.3;
+                const dir = directions[i % directions.length];
 
-                // grow timeline line
+                gsap.set(item, {
+                    opacity: 0,
+                    x: dir.x,
+                    y: dir.y,
+                    filter: "blur(6px)",
+                });
+
+                // 🎯 CALCULATED SCROLL POSITION
+                const rawProgress = i / (total - 1);
+                const adjusted =
+                    PANEL_ENTER_OFFSET +
+                    rawProgress * usableRange * ITEM_REVEAL_SPREAD;
+
+                // timeline line
                 hsTimeline.current.to(
                     ".p4-h-line",
                     {
-                        scaleX: progress,
-                        duration: 0.4,
-                        ease: "power2.out",
+                        scaleX: adjusted,
+                        ease: "none",
                     },
-                    `panel-4+=${baseTime}`
+                    `panel-4+=${adjusted}`
                 );
 
-                // reveal + activate item
+                // item reveal
                 hsTimeline.current.to(
                     item,
                     {
                         opacity: 1,
+                        x: 0,
                         y: 0,
-                        duration: 0.4,
+                        filter: "blur(0px)",
                         ease: "power2.out",
-                        onStart: () => {
-                            items.forEach((el) => el.classList.remove("active"));
-                            item.classList.add("active");
-                        },
                     },
-                    `panel-4+=${baseTime}`
+                    `panel-4+=${adjusted}`
                 );
             });
         }, panelRef);
@@ -89,23 +110,30 @@ export default function PanelFour({ hsTimeline, timelineReady }) {
         return () => ctx.revert();
     }, [timelineReady]);
 
+
+
     return (
         <section ref={panelRef} className="panel-four">
             <div className="panel-four-inner">
                 <h1 className="p4-title">Journey</h1>
                 <p className="p4-sub">
-                    Progression through learning communities, semesters, and real-world
-                    skill building.
+                    A quiet progression through communities, semesters, and
+                    skills that slowly turned curiosity into capability.
                 </p>
 
                 <div className="p4-horizontal">
                     <div className="p4-h-line" />
 
                     {timelineItems.map((item, i) => (
-                        <div key={i} className="p4-item">
+                        <div key={i} className="p4-item active">
                             <span className="p4-dot" />
                             <h3>{item.title}</h3>
-                            <p>{item.subtitle}</p>
+
+                            {item.subtitle.split("·").map((line, j) => (
+                                <p key={j} className="p4-line">
+                                    {line.trim()}
+                                </p>
+                            ))}
                         </div>
                     ))}
                 </div>

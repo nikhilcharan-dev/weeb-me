@@ -35,7 +35,7 @@ export default function PanelSeven({ hsTimeline, timelineReady }) {
             };
 
             const angelsTo = {
-                opacity: 0.7,
+                opacity: 1,
                 x: -60,
                 y: -130,
                 scale: 1,
