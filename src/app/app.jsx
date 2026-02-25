@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 
 import {Canvas, useThree} from "@react-three/fiber";
-import { Environment, ContactShadows } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import Avatar from "@/components/3DComponents/Avatar/Avatar";
 
 
