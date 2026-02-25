@@ -69,9 +69,8 @@ a {
 }
 
 .intro {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  height: 100svh;
 }
 
 .welcome-text {
@@ -81,16 +80,6 @@ a {
   opacity: 0;
 
   margin-left: 20vw;
-}
-
-.clipped-video {
-  object-fit: cover;
-  opacity: 0;
-  clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 50% 50%);
-  width: 320px;
-  height: 420px;
-  animation: clip-in 1.5s forwards;
-  box-shadow: 0 20px 40px #00000059;
 }
 
 @media (max-width: 768px) {
