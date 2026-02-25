@@ -12,7 +12,6 @@ export default function Avatar({
                                    position = [0, 0, 0],
                                    scale = 1,
                                }) {
-
     const group = useRef()
     const currentAction = useRef(null)
     const introFinished = useRef(false)
