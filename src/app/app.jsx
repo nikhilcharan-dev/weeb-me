@@ -25,9 +25,9 @@ export default function Home() {
 
     useEffect(() => {
 
-        // fetch("/api/view", {
-        //     method: "POST",
-        // });
+        fetch("/api/view", {
+            method: "POST",
+        });
 
         const key = "nova-portfolio-visits";
         const prev = Number(localStorage.getItem(key) || Math.random() * (10 ** 3));
