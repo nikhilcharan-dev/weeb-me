@@ -111,3 +111,33 @@
   transform: translateY(-6px) scale(1.02);
   box-shadow: 0 0 35px rgba(255, 255, 255, 0.18);
 }
+
+@media (max-width: 768px) {
+  .panel-five {
+    height: auto;
+    min-height: 100svh;
+    padding: 2rem 1.5rem;
+  }
+
+  .p5-sub {
+    margin-bottom: 2rem;
+  }
+
+  .p5-resume {
+    padding: 1.2rem;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .p5-resume img {
+    width: 10%;
+  }
+
+  .p5-resume h2 {
+    font-size: 1.2rem;
+  }
+
+  .p5-cert-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  }
+}

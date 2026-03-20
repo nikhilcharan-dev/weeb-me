@@ -59,3 +59,23 @@
     transform: scale(1) translateY(110%);
   }
 }
+
+@media (max-width: 768px) {
+  .text-layer {
+    font-size: clamp(3rem, 12vw, 7rem);
+  }
+
+  .l-1 {
+    top: 15%;
+    left: 2%;
+  }
+
+  .l-2 {
+    left: 10%;
+    bottom: 10%;
+  }
+
+  .icarus {
+    height: clamp(120px, 30vw, 300px);
+  }
+}

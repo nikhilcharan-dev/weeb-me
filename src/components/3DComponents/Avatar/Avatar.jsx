@@ -5,12 +5,12 @@ import { useFrame } from '@react-three/fiber'
 import { useGLTF, useAnimations, useFBX } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
 import * as THREE from 'three'
-
-useGLTF.preload('/models/me.glb')
+import { playAvatarInteract } from '@/lib/sounds'
 
 export default function Avatar({
                                    position = [0, 0, 0],
                                    scale = 1,
+                                   isMobile = false,
                                }) {
     const group = useRef()
     const currentAction = useRef(null)
@@ -112,6 +112,7 @@ export default function Avatar({
         if (!interact) return
 
         playAction("Interact", THREE.LoopOnce)
+        try { playAvatarInteract() } catch {}
 
         const handleFinish = (e) => {
             if (e.action === interact) {
@@ -133,6 +134,7 @@ export default function Avatar({
     useFrame((state) => {
         if (!group.current) return
         if (!introFinished.current) return
+        if (isMobile) return
 
         const head = group.current.getObjectByName("Head")
         if (!head) return

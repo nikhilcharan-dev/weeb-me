@@ -83,3 +83,50 @@
   background-color: black;
   backdrop-filter: blur(15px);
 }
+
+@media (max-width: 768px) {
+  .panel-one {
+    flex-direction: column;
+    padding: 2rem 1.5rem;
+    align-items: flex-start;
+  }
+
+  .panel-one-inner {
+    max-width: 100%;
+    position: static;
+  }
+
+  .p1-desc {
+    font-size: 1rem;
+  }
+
+  .hero-p1 {
+    position: static;
+    width: 100%;
+    max-height: 40vh;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .skill-head {
+    position: static;
+    transform: none;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .p1-skills-inner {
+    position: static;
+    transform: none;
+    max-width: 100%;
+    width: 100%;
+    padding: 0;
+    gap: 0.6rem;
+  }
+
+  .p1-skills-inner li {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
+}

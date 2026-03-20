@@ -57,7 +57,7 @@ const Footer = dynamic(
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-export default function HorizontalScroll() {
+export default function HorizontalScroll({ isMobile = false }) {
     const wrapperRef = useRef(null);
     const trackRef = useRef(null);
 
@@ -65,6 +65,11 @@ export default function HorizontalScroll() {
     const [timelineReady, setTimelineReady] = useState(false);
 
     useEffect(() => {
+        if (isMobile) {
+            setTimelineReady(false);
+            return;
+        }
+
         const ctx = gsap.context(() => {
             const horizontalPanels = gsap.utils.toArray(".hs-panel");
             const count = horizontalPanels.length - 1;
@@ -102,7 +107,7 @@ export default function HorizontalScroll() {
         }, wrapperRef);
 
         return () => ctx.revert();
-    }, []);
+    }, [isMobile]);
 
     return (
         <>

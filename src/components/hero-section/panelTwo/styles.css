@@ -130,3 +130,27 @@
 .p2-card:hover .count {
   color: var(--accent);
 }
+
+@media (max-width: 768px) {
+  .panel-two {
+    padding: 2rem 1.5rem;
+  }
+
+  .p2-sub {
+    margin-bottom: 2rem;
+  }
+
+  .p2-grid {
+    gap: 1rem;
+  }
+
+  .p2-card {
+    padding: 1rem;
+    min-width: auto;
+    width: 100%;
+  }
+
+  .p2-crown {
+    display: none;
+  }
+}

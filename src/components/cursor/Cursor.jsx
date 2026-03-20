@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import gsap from "gsap";
+import { playClick } from "@/lib/sounds";
 import './styles.css';
 
 export default function Cursor() {
@@ -52,11 +53,24 @@ export default function Cursor() {
             });
         });
 
+        const onMouseDown = () => {
+            try { playClick() } catch {}
+            gsap.to(cursor, { scale: 0.6, duration: 0.1 });
+        };
+
+        const onMouseUp = () => {
+            gsap.to(cursor, { scale: 1, duration: 0.15, ease: "back.out(2)" });
+        };
+
         window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("mousedown", onMouseDown);
+        window.addEventListener("mouseup", onMouseUp);
 
         return () => {
             gsap.ticker.remove(tick);
             window.removeEventListener("mousemove", onMouseMove);
+            window.removeEventListener("mousedown", onMouseDown);
+            window.removeEventListener("mouseup", onMouseUp);
             cursorTargets.forEach(el => {
                 el.replaceWith(el.cloneNode(true)); // clean listeners safely
             });

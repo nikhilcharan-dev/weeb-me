@@ -148,3 +148,30 @@
   background: #E5DDD3;
   z-index: -1;
 }
+
+@media (max-width: 768px) {
+  .ending-overlay h1 {
+    font-size: clamp(1.6rem, 7vw, 3rem);
+    letter-spacing: 0.06em;
+  }
+
+  .closing-line {
+    max-width: 90vw;
+    font-size: 14px;
+  }
+
+  .ending-actions {
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .spidy {
+    height: clamp(200px, 40vh, 500px);
+    right: 2%;
+  }
+
+  .thanks {
+    margin-top: 32px;
+  }
+}

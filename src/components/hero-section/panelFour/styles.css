@@ -131,3 +131,37 @@
 .p4-item.active .p4-line {
   opacity: 0.9;
 }
+
+@media (max-width: 768px) {
+  .panel-four {
+    width: 100%;
+    height: auto;
+    min-height: 100svh;
+    padding: 2rem 1.5rem;
+  }
+
+  .p4-sub {
+    margin-bottom: 2rem;
+  }
+
+  .p4-horizontal {
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    padding-top: 0;
+  }
+
+  .p4-h-line {
+    display: none;
+  }
+
+  .p4-item {
+    min-width: auto;
+    width: 100%;
+    opacity: 1;
+  }
+
+  .p4-dot {
+    display: none;
+  }
+}

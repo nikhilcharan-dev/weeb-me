@@ -97,3 +97,22 @@
   color: black;
   background: whitesmoke;
 }
+
+@media (max-width: 768px) {
+  .panel-three {
+    padding: 2rem 1.5rem;
+  }
+
+  .p3-sub {
+    margin-bottom: 2rem;
+  }
+
+  .p3-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .p3-card {
+    padding: 1.2rem;
+  }
+}

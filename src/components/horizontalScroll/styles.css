@@ -46,6 +46,12 @@
 
   .hs-panel {
     width: 100%;
-    height: 100svh;
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .four,
+  .seven {
+    width: 100%;
   }
 }

@@ -1,16 +1,17 @@
 'use client'
 import * as THREE from "three"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { TextPlugin } from "gsap/TextPlugin";
 
 import {Canvas, useThree} from "@react-three/fiber";
-import { Environment } from "@react-three/drei";
+import { Environment, useProgress } from "@react-three/drei";
 import Avatar from "@/components/3DComponents/Avatar/Avatar";
 
-
+import LoadingScreen from "@/components/loadingScreen/LoadingScreen";
+import BlackHole from "@/components/3DComponents/HeroBackground/BlackHole";
 import Cursor from "@/components/cursor/Cursor";
 import HorizontalScroll from "@/components/horizontalScroll/HorizontalScroll";
 import EndingOverlay from '@/components/ending/EndingOverlay';
@@ -19,11 +20,65 @@ import './styles.css'
 
 gsap.registerPlugin(TextPlugin, ScrollTrigger);
 
+function ProgressTracker({ onProgress }) {
+    const { progress } = useProgress();
+    const maxProgress = useRef(0);
+
+    useEffect(() => {
+        maxProgress.current = Math.max(maxProgress.current, progress);
+        onProgress(maxProgress.current);
+    }, [progress, onProgress]);
+
+    return null;
+}
+
+function CinematicCamera({ fov }) {
+    const { camera } = useThree();
+
+    useEffect(() => {
+        if (fov) camera.fov = fov;
+        camera.updateProjectionMatrix();
+        camera.lookAt(0.3, 1.4, 0);
+    }, [camera, fov]);
+
+    return null;
+}
+
 export default function Home() {
 
     const [showEnding, setShowEnding] = useState(false);
+    const [loaded, setLoaded] = useState(false);
+    const [loadProgress, setLoadProgress] = useState(0);
+    const [isMobile, setIsMobile] = useState(false);
 
+    // Mobile detection
     useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth <= 768);
+        check();
+        window.addEventListener('resize', check);
+        return () => window.removeEventListener('resize', check);
+    }, []);
+
+    // Lock scroll during loading
+    useEffect(() => {
+        if (!loaded) {
+            document.documentElement.style.overflow = 'hidden';
+        } else {
+            document.documentElement.style.overflow = '';
+        }
+    }, [loaded]);
+
+    const handleProgress = useCallback((p) => {
+        setLoadProgress(p);
+    }, []);
+
+    const handleLoadComplete = useCallback(() => {
+        setLoaded(true);
+    }, []);
+
+    // GSAP intro timeline — only fires after loading completes
+    useEffect(() => {
+        if (!loaded) return;
 
         fetch("/api/view", {
             method: "POST",
@@ -51,7 +106,7 @@ export default function Home() {
             {
                 opacity: 1,
                 y: 0,
-                x: -10,
+                x: isMobile ? 0 : -10,
                 duration: 1,
                 ease: "power2.out",
             }
@@ -88,7 +143,7 @@ export default function Home() {
         }, "-=1")
         .to(".scroll-text", {
             opacity: 0,
-            text: "Scroll to view",
+            text: "Scroll to Explore",
         }, "-=0.5")
         .to(".scroll-text", {
             opacity: 1,
@@ -112,20 +167,17 @@ export default function Home() {
             },
         });
 
-    }, []);
+    }, [loaded]);
 
-    function CinematicCamera() {
-        const { camera } = useThree();
-
-        useEffect(() => {
-            camera.lookAt(0.3, 1.4, 0); // slight offset right
-        }, [camera]);
-
-        return null;
-    }
+    const shadowMapSize = isMobile ? 1024 : 4096;
+    const fov = isMobile ? 50 : 40;
+    const ambientRef = useRef();
+    const directionalRef = useRef();
+    const lightsRef = useMemo(() => ({ ambient: ambientRef, directional: directionalRef }), []);
 
     return (
         <>
+            <LoadingScreen progress={loadProgress} onComplete={handleLoadComplete} />
             <Cursor />
 
             <section className="section-default intro" data-cursor="black">
@@ -140,22 +192,25 @@ export default function Home() {
                 <div className="avatar-container">
                     <Canvas
                         shadows
-                        dpr={[1,2]}
-                        camera={{ position: [-0.5, 1.8, 4], fov: 40 }}
+                        dpr={isMobile ? [1, 1.5] : [1, 2]}
+                        camera={{ position: [-0.5, 1.8, 4], fov }}
                         gl={{ antialias: true }}
                         onCreated={({ gl }) => {
                             gl.shadowMap.enabled = true
                             gl.shadowMap.type = THREE.PCFSoftShadowMap
                         }}
                     >
-                        <ambientLight intensity={0.15} />
+                        <ProgressTracker onProgress={handleProgress} />
+
+                        <ambientLight ref={ambientRef} intensity={0.15} />
 
                         <directionalLight
+                            ref={directionalRef}
                             position={[5, 8, 5]}
-                            intensity={1.5}
+                            intensity={isMobile ? 1.2 : 1.5}
                             castShadow
-                            shadow-mapSize-width={4096}
-                            shadow-mapSize-height={4096}
+                            shadow-mapSize-width={shadowMapSize}
+                            shadow-mapSize-height={shadowMapSize}
                             shadow-camera-near={1}
                             shadow-camera-far={25}
                             shadow-camera-left={-6}
@@ -167,7 +222,7 @@ export default function Home() {
                         />
 
                         <group position={[-1.3, 0.3, 0]}>
-                            <Avatar />
+                            <Avatar isMobile={isMobile} />
                             <mesh
                                 rotation={[-Math.PI / 2, 0, 0]}
                                 position={[0, 0, 0]}
@@ -178,7 +233,9 @@ export default function Home() {
                             </mesh>
                         </group>
 
-                        <CinematicCamera />
+                        <BlackHole isMobile={isMobile} lightsRef={lightsRef} />
+
+                        <CinematicCamera fov={fov} />
 
                         <Environment preset="sunset" />
                     </Canvas>
@@ -188,7 +245,7 @@ export default function Home() {
 
             </section>
 
-            <HorizontalScroll />
+            <HorizontalScroll isMobile={isMobile} />
 
             <section style={{ height: "2000vh" }} />
 

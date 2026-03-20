@@ -70,3 +70,23 @@ canvas {
   font-weight: 500;
   mix-blend-mode: difference;
 }
+
+@media (max-width: 768px) {
+  .welcome-text {
+    left: 50%;
+    width: 90vw;
+  }
+
+  .title {
+    width: 90vw;
+  }
+
+  .scroll-text {
+    font-size: 1rem;
+  }
+
+  .visit-counter {
+    top: 16px;
+    right: 16px;
+  }
+}

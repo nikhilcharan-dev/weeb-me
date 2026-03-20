@@ -31,3 +31,24 @@
   opacity: 0;
   transform: translateY(20px);
 }
+
+@media (max-width: 768px) {
+  .zero {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-left: 0;
+    gap: 1.5rem;
+  }
+
+  .roles {
+    width: 90vw;
+    right: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .role {
+    font-size: clamp(1.4rem, 5vw, 2.2rem);
+  }
+}

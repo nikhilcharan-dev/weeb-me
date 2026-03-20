@@ -68,3 +68,26 @@
   z-index: 2;
   opacity: 0.45;
 }
+
+@media (max-width: 768px) {
+  .panel-seven-footer {
+    padding: 2rem 1.5rem;
+    justify-content: center;
+  }
+
+  .p7-name {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
+
+  .p7-line {
+    font-size: 14px;
+  }
+
+  .p7-angels {
+    width: 200px;
+  }
+
+  .p7-decor {
+    width: 80px;
+  }
+}

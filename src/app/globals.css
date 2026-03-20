@@ -8,6 +8,10 @@
   font-display: swap;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 html,
 body {
   max-width: 100svw;

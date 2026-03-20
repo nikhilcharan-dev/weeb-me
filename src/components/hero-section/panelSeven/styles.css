@@ -61,3 +61,20 @@
   pointer-events: none;
   z-index: 999;
 }
+
+@media (max-width: 768px) {
+  .scene-title {
+    font-size: clamp(1.8rem, 7vw, 3.5rem);
+    width: 90vw;
+  }
+
+  .scene-text {
+    font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+    max-width: 90vw;
+  }
+
+  .p7-image {
+    max-width: 90vw;
+    height: auto;
+  }
+}
