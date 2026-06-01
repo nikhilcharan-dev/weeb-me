@@ -75,31 +75,31 @@ a {
 .intro {
   position: relative;
   height: 100svh;
+  background: #07070e;
+  color: #fff;
+  overflow: hidden;
 }
 
 .welcome-text {
-  font-size: clamp(2.5rem, 6vw, 6rem);
-  font-weight: 600;
-  letter-spacing: 0.2rem;
+  font-size: clamp(4rem, 10.5vw, 12rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.0;
   opacity: 0;
-
-  margin-left: 20vw;
+  color: #fff;
+  white-space: nowrap;
 }
 
 @media (max-width: 768px) {
   .welcome-text {
-    font-size: clamp(2rem, 8vw, 4rem);
-    letter-spacing: 0.15rem;
-    margin-left: 0;
-    text-align: center;
-    padding: 0 1rem;
+    font-size: clamp(3.5rem, 14vw, 6rem);
+    letter-spacing: -0.01em;
   }
 
   .clipped-video {
     width: 150px;
     height: auto;
   }
-
 }
 
 @keyframes clip-in {

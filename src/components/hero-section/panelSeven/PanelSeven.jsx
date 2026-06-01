@@ -1,22 +1,90 @@
 'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import "./styles.css";
-import { scenes } from "./scenes";
+import { getScenes } from "./scenes";
+import EndingMusic from "@/components/ending/EndingMusic";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const scenes = getScenes(window.innerWidth, window.innerHeight);
+
 export default function PanelSeven() {
-    const panelRef = useRef(null);
+    const panelRef   = useRef(null);
     const overlayRef = useRef(null);
-    const imagesRef = useRef({});
-    const textRef = useRef({});
-    const titleRef = useRef({});
+    const imagesRef  = useRef({});
+    const textRef    = useRef({});
+    const titleRef   = useRef({});
+    const [musicOn, setMusicOn] = useState(false);
 
     useEffect(() => {
+        // ── Auto-scroll state (all plain vars — no re-render needed) ──
+        const panelStartY = { current: 0 };
+        const autoTween   = { current: null };
+        const resumeTimer = { current: null };
+        let inPanel = false;
 
+        const PANEL_DIST = 20000;
+        const PX_PER_FRAME = 11; // ~660 px/s at 60 fps
+
+        function startAutoScroll(easeIn = false) {
+            if (autoTween.current) cancelAnimationFrame(autoTween.current);
+            let frame = 0;
+            const RAMP = easeIn ? 80 : 0; // frames to ease-in from 0 → PX_PER_FRAME
+
+            function tick() {
+                if (!inPanel) return;
+                if (window.scrollY >= panelStartY.current + PANEL_DIST - 10) {
+                    autoTween.current = null;
+                    return;
+                }
+                frame++;
+                const px = RAMP === 0
+                    ? PX_PER_FRAME
+                    : Math.min(PX_PER_FRAME, (frame / RAMP) * PX_PER_FRAME);
+                window.scrollBy(0, px);
+                autoTween.current = requestAnimationFrame(tick);
+            }
+            autoTween.current = requestAnimationFrame(tick);
+        }
+
+        function scheduleResume() {
+            if (resumeTimer.current) clearTimeout(resumeTimer.current);
+            resumeTimer.current = setTimeout(() => {
+                if (inPanel && window.scrollY < panelStartY.current + PANEL_DIST) {
+                    startAutoScroll(false);
+                }
+            }, 5000);
+        }
+
+        // Fires on every wheel / touch tick — debounces the resume timer
+        function handleUserInput() {
+            if (autoTween.current) { cancelAnimationFrame(autoTween.current); autoTween.current = null; }
+            if (inPanel) scheduleResume();
+        }
+
+        function addListeners() {
+            window.removeEventListener('wheel',      handleUserInput);
+            window.removeEventListener('touchstart', handleUserInput);
+            window.addEventListener('wheel',      handleUserInput, { passive: true });
+            window.addEventListener('touchstart', handleUserInput, { passive: true });
+        }
+
+        function removeListeners() {
+            window.removeEventListener('wheel',      handleUserInput);
+            window.removeEventListener('touchstart', handleUserInput);
+        }
+
+        function teardown() {
+            inPanel = false;
+            if (autoTween.current)  { cancelAnimationFrame(autoTween.current); autoTween.current = null; }
+            if (resumeTimer.current){ clearTimeout(resumeTimer.current); resumeTimer.current = null; }
+            removeListeners();
+        }
+
+        // ─────────────────────────────────────────────────────────────
         const ctx = gsap.context(() => {
 
             Object.values(imagesRef.current).forEach((el) =>
@@ -45,6 +113,23 @@ export default function PanelSeven() {
                     end: "+=20000",
                     pin: true,
                     scrub: 1,
+                    onEnter: () => {
+                        inPanel = true;
+                        panelStartY.current = window.scrollY;
+                        setMusicOn(true);
+                        addListeners();
+                        startAutoScroll(true); // ease-in on first entry
+                    },
+                    onEnterBack: () => {
+                        inPanel = true;
+                        addListeners();
+                        // user is scrolling back in manually — just schedule a resume
+                        scheduleResume();
+                    },
+                    onLeaveBack: () => {
+                        setMusicOn(false);
+                        teardown();
+                    },
                 },
             });
 
@@ -111,12 +196,14 @@ export default function PanelSeven() {
 
         }, panelRef);
 
-        return () => ctx.revert();
+        return () => { teardown(); ctx.revert(); };
+
     }, []);
 
     return (
         <section ref={panelRef} className="panel-seven">
             <div ref={overlayRef} className="p7-overlay" />
+            {musicOn && <EndingMusic />}
             {/*<div className="debug-grid" />*/}
 
             {scenes.map((scene, i) => (

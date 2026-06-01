@@ -38,24 +38,77 @@ if (typeof window !== 'undefined') {
   ensureUnlocked()
 }
 
-// ─── CLICK SOUND ───
-// Short percussive blip
+// ─── CLICK SOUND ── crystal bell tap ───────────────
 export function playClick() {
   const ac = getCtx()
-  const osc = ac.createOscillator()
+  if (ac.state === 'suspended') return
+  const t = ac.currentTime
+
+  // Three stacked harmonics for a crystal-bell tone
+  const freqs  = [1320, 1980, 2640]
+  const master = ac.createGain()
+  master.gain.setValueAtTime(0.13, t)
+  master.gain.exponentialRampToValueAtTime(0.001, t + 0.22)
+  master.connect(ac.destination)
+
+  freqs.forEach((f, i) => {
+    const osc  = ac.createOscillator()
+    const gain = ac.createGain()
+    osc.type = 'sine'
+    osc.frequency.setValueAtTime(f, t)
+    osc.frequency.exponentialRampToValueAtTime(f * 0.5, t + 0.18)
+    gain.gain.setValueAtTime(1 - i * 0.28, t)
+    osc.connect(gain)
+    gain.connect(master)
+    osc.start(t)
+    osc.stop(t + 0.22)
+  })
+}
+
+// ─── LOADING TICK ── soft digital blip ─────────────
+export function playLoadTick() {
+  const ac = getCtx()
+  if (ac.state === 'suspended') return
+  const t = ac.currentTime
+
+  const osc  = ac.createOscillator()
   const gain = ac.createGain()
-
-  osc.type = 'sine'
-  osc.frequency.setValueAtTime(800, ac.currentTime)
-  osc.frequency.exponentialRampToValueAtTime(400, ac.currentTime + 0.08)
-
-  gain.gain.setValueAtTime(0.2, ac.currentTime)
-  gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12)
-
+  osc.type = 'square'
+  osc.frequency.setValueAtTime(880, t)
+  osc.frequency.exponentialRampToValueAtTime(440, t + 0.04)
+  gain.gain.setValueAtTime(0.04, t)
+  gain.gain.exponentialRampToValueAtTime(0.001, t + 0.06)
   osc.connect(gain)
   gain.connect(ac.destination)
-  osc.start(ac.currentTime)
-  osc.stop(ac.currentTime + 0.12)
+  osc.start(t)
+  osc.stop(t + 0.06)
+}
+
+// ─── LOAD COMPLETE ── ascending arpeggio chime ─────
+export function playLoadComplete() {
+  const ac = getCtx()
+  if (ac.state === 'suspended') return
+  const t = ac.currentTime
+
+  // C5 – E5 – G5 – C6 quick arpeggio
+  const notes = [523, 659, 784, 1047]
+  const master = ac.createGain()
+  master.gain.setValueAtTime(0.12, t)
+  master.connect(ac.destination)
+
+  notes.forEach((freq, i) => {
+    const osc  = ac.createOscillator()
+    const gain = ac.createGain()
+    const s    = t + i * 0.075
+    osc.type = 'sine'
+    osc.frequency.value = freq
+    gain.gain.setValueAtTime(0.9, s)
+    gain.gain.exponentialRampToValueAtTime(0.001, s + 0.35)
+    osc.connect(gain)
+    gain.connect(master)
+    osc.start(s)
+    osc.stop(s + 0.35)
+  })
 }
 
 // ─── GLITCH SOUND ───

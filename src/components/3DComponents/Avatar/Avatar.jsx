@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useMemo } from 'react'
+import { useEffect, useRef, useMemo } from 'react'
 import { useFrame } from '@react-three/fiber'
 import { useGLTF, useAnimations, useFBX } from '@react-three/drei'
 import { SkeletonUtils } from 'three-stdlib'
@@ -8,16 +8,19 @@ import * as THREE from 'three'
 import { playAvatarInteract } from '@/lib/sounds'
 
 export default function Avatar({
-                                   position = [0, 0, 0],
-                                   scale = 1,
-                                   isMobile = false,
-                               }) {
+    position = [0, 0, 0],
+    scale = 1,
+    isMobile = false,
+}) {
     const group = useRef()
     const currentAction = useRef(null)
+    const interactActionRef = useRef(null) // tracked separately from useAnimations actions
     const introFinished = useRef(false)
     const mixerRef = useRef(null)
+    const interactClipRef = useRef(null)
+    const loadingInteract = useRef(false)
 
-    // ---------------- MODEL ----------------
+    // ── MODEL ──────────────────────────────────────────────────
     const { scene } = useGLTF('/models/me.glb')
 
     const clone = useMemo(() => {
@@ -31,35 +34,38 @@ export default function Avatar({
         return cloned
     }, [scene])
 
-    // ---------------- ANIMATIONS ----------------
+    // ── BASE ANIMATIONS (Intro + Idle only on initial load) ────
     const introFBX = useFBX('/animations/Intro.fbx')
-    const idleFBX = useFBX('/animations/Idle.fbx')
-    const interactFBX = useFBX('/animations/Interact.fbx')
+    const idleFBX  = useFBX('/animations/Idle.fbx')
 
-    introFBX.animations[0].name = "Intro"
-    idleFBX.animations[0].name = "Idle"
-    interactFBX.animations[0].name = "Interact"
+    introFBX.animations[0].name = 'Intro'
+    idleFBX.animations[0].name  = 'Idle'
 
-    const animations = useMemo(() => [
+    const baseAnimations = useMemo(() => [
         introFBX.animations[0],
         idleFBX.animations[0],
-        interactFBX.animations[0],
-    ], [introFBX, idleFBX, interactFBX])
+    ], [introFBX, idleFBX])
 
-    const { actions, mixer } = useAnimations(animations, group)
+    const { actions, mixer } = useAnimations(baseAnimations, group)
 
-    useEffect(() => {
-        mixerRef.current = mixer
-    }, [mixer])
+    useEffect(() => { mixerRef.current = mixer }, [mixer])
 
-    // ---------------- HARD PLAY FUNCTION ----------------
+    // ── PLAY HELPER ────────────────────────────────────────────
     const playAction = (name, loop = THREE.LoopRepeat) => {
         if (!actions) return
 
-        Object.values(actions).forEach(action => {
-            action.stop()
-            action.enabled = false
-            action.setEffectiveWeight(0)
+        // Stop the dynamically-loaded interact action if it is running
+        if (interactActionRef.current) {
+            interactActionRef.current.stop()
+            interactActionRef.current.enabled = false
+            interactActionRef.current.setEffectiveWeight(0)
+            interactActionRef.current = null
+        }
+
+        Object.values(actions).forEach(a => {
+            a.stop()
+            a.enabled = false
+            a.setEffectiveWeight(0)
         })
 
         const next = actions[name]
@@ -70,82 +76,115 @@ export default function Avatar({
         next.setEffectiveWeight(1)
         next.setEffectiveTimeScale(1)
         next.setLoop(loop, loop === THREE.LoopRepeat ? Infinity : 1)
-        next.clampWhenFinished = loop !== THREE.LoopRepeat
+        next.clampWhenFinished = false
         next.play()
 
         currentAction.current = next
     }
 
-    // ---------------- INTRO AUTO PLAY ----------------
+    // ── INTRO AUTO-PLAY ────────────────────────────────────────
     useEffect(() => {
-        if (!actions || !mixerRef.current) return
-        if (introFinished.current) return
+        if (!actions || !mixerRef.current || introFinished.current) return
 
-        const intro = actions["Intro"]
-        const idle = actions["Idle"]
-
+        const intro = actions['Intro']
+        const idle  = actions['Idle']
         if (!intro || !idle) return
 
-        playAction("Intro", THREE.LoopOnce)
+        playAction('Intro', THREE.LoopOnce)
 
-        const handleFinish = (e) => {
-            if (e.action === intro) {
-                introFinished.current = true
-                playAction("Idle", THREE.LoopRepeat)
-            }
+        const onFinish = (e) => {
+            if (e.action !== intro) return
+            introFinished.current = true
+            playAction('Idle', THREE.LoopRepeat)
         }
 
-        mixerRef.current.addEventListener("finished", handleFinish)
-
-        return () => {
-            mixerRef.current?.removeEventListener("finished", handleFinish)
-        }
-
+        mixerRef.current.addEventListener('finished', onFinish)
+        return () => mixerRef.current?.removeEventListener('finished', onFinish)
     }, [actions])
 
-    // ---------------- INTERACT ON HOVER ----------------
-    const handlePointerOver = () => {
-        if (!introFinished.current) return
-        if (!actions) return
-
-        const interact = actions["Interact"]
-        if (!interact) return
-
-        playAction("Interact", THREE.LoopOnce)
-        try { playAvatarInteract() } catch {}
-
-        const handleFinish = (e) => {
-            if (e.action === interact) {
-                playAction("Idle", THREE.LoopRepeat)
-            }
+    // ── INTERACT (lazy-loaded on first hover) ──────────────────
+    const ensureInteractClip = async () => {
+        if (interactClipRef.current) return interactClipRef.current
+        if (loadingInteract.current) return null
+        loadingInteract.current = true
+        try {
+            const { FBXLoader } = await import('three-stdlib')
+            const fbx = await new FBXLoader().loadAsync('/animations/Interact.fbx')
+            const clip = fbx.animations[0]
+            clip.name = 'Interact'
+            interactClipRef.current = clip
+            return clip
+        } catch {
+            loadingInteract.current = false
+            return null
         }
-
-        mixerRef.current?.addEventListener("finished", handleFinish)
-
-        setTimeout(() => {
-            mixerRef.current?.removeEventListener("finished", handleFinish)
-        }, interact._clip.duration * 1000)
     }
 
-    // ---------------- LOOK AT MOUSE (Only After Intro) ----------------
-    const headTarget = useRef(new THREE.Vector3())
+    const handlePointerOver = async () => {
+        if (!introFinished.current || !mixerRef.current || !group.current) return
+
+        const clip = await ensureInteractClip()
+        if (!clip) return
+
+        // Stop all current actions cleanly
+        if (interactActionRef.current) {
+            interactActionRef.current.stop()
+            interactActionRef.current.enabled = false
+            interactActionRef.current.setEffectiveWeight(0)
+        }
+        Object.values(actions || {}).forEach(a => {
+            a.stop()
+            a.enabled = false
+            a.setEffectiveWeight(0)
+        })
+
+        const interact = mixerRef.current.clipAction(clip, group.current)
+        interact.reset()
+        interact.enabled = true
+        interact.setEffectiveWeight(1)
+        interact.setEffectiveTimeScale(1)
+        interact.setLoop(THREE.LoopOnce, 1)
+        interact.clampWhenFinished = false // prevent pose-lock on last frame
+        interact.play()
+
+        interactActionRef.current = interact
+        currentAction.current = interact
+
+        try { playAvatarInteract() } catch {}
+
+        const onFinish = (e) => {
+            if (e.action !== interact) return
+            mixerRef.current?.removeEventListener('finished', onFinish)
+            interactActionRef.current = null
+            playAction('Idle', THREE.LoopRepeat)
+        }
+        mixerRef.current.addEventListener('finished', onFinish)
+
+        // Fallback cleanup in case 'finished' never fires
+        setTimeout(() => {
+            mixerRef.current?.removeEventListener('finished', onFinish)
+        }, clip.duration * 1000 + 800)
+    }
+
+    // ── HEAD TRACKING ──────────────────────────────────────────
+    const headTarget  = useRef(new THREE.Vector3())
     const currentLook = useRef(new THREE.Vector3())
 
-    useFrame((state) => {
-        if (!group.current) return
-        if (!introFinished.current) return
-        if (isMobile) return
+    useFrame((state, delta) => {
+        if (!group.current || !introFinished.current || isMobile) return
 
-        const head = group.current.getObjectByName("Head")
+        const head = group.current.getObjectByName('Head')
         if (!head) return
 
         headTarget.current.set(
-            state.mouse.x * 2,
-            1.5 + state.mouse.y * 1.5,
+            state.mouse.x * 1.8,
+            1.5 + state.mouse.y * 1.2,
             4
         )
 
-        currentLook.current.lerp(headTarget.current, 0.08)
+        // Frame-rate independent exponential smoothing
+        const t = 1 - Math.pow(0.05, delta * 3)
+        currentLook.current.lerp(headTarget.current, t)
         head.lookAt(currentLook.current)
     })
 
@@ -161,3 +200,5 @@ export default function Avatar({
         </group>
     )
 }
+
+useGLTF.preload('/models/me.glb')

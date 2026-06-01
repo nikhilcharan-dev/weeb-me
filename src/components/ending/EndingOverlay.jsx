@@ -62,9 +62,8 @@ export default function EndingOverlay() {
             </p>
 
             <p className="closing-line">
-                I don’t just build projects.<br />
-                I build worlds where logic, emotion,<br />
-                and motion meet.
+                Turning ideas into experiences,<br />
+                and experiences into stories worth exploring.
             </p>
 
             <div className="ending-actions">

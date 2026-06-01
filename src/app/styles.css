@@ -1,92 +1,328 @@
-.welcome-text {
-  position: absolute;
-  top: 50%;
-  left: 40%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.scroll-text {
-  position: absolute;
-  bottom: 10vh;
-  left: 50svw;
-  transform: translateX(-50%);
-  opacity: 0;
-
-  font-size: 1.3rem;
-}
-
-.title {
-  width: 50vw;
-  text-align: center;
-}
-
-.avatar-container {
+/* ─── Particle canvas ────────────────────────────────── */
+.hero-particles-canvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Grid overlay ───────────────────────────────────── */
+.intro::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.018) 1px, transparent 1px);
+  background-size: 72px 72px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Ambient orbs (white only) ──────────────────────── */
+.hero-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(110px);
+}
+
+.hero-orb-1 {
+  width: min(58vw, 680px);
+  height: min(58vw, 680px);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.055) 0%, transparent 68%);
+  top: -18%;
+  left: -8%;
+  animation: orbDrift1 22s ease-in-out infinite alternate;
+}
+
+.hero-orb-2 {
+  width: min(44vw, 560px);
+  height: min(44vw, 560px);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.035) 0%, transparent 68%);
+  bottom: -22%;
+  right: 8%;
+  animation: orbDrift2 26s ease-in-out infinite alternate;
+}
+
+@keyframes orbDrift1 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(6%, 9%) scale(1.06); }
+}
+@keyframes orbDrift2 {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-5%, -7%) scale(1.04); }
+}
+
+/* ─── Scanline (white) ───────────────────────────────── */
+.hero-scanline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.14) 35%,
+    rgba(255, 255, 255, 0.14) 65%,
+    transparent 100%
+  );
+  pointer-events: none;
   z-index: 1;
+  animation: scanDown 10s linear infinite;
 }
 
-canvas {
-  width: 100% !important;
-  height: 100% !important;
+@keyframes scanDown {
+  0%   { top: -1px; opacity: 0; }
+  5%   { opacity: 0.8; }
+  90%  { opacity: 0.5; }
+  100% { top: 100%; opacity: 0; }
 }
 
-/* Chrome, Edge, Safari */
-.intro *::selection {
-  background: black;
-  color: #fff;
+/* ─── Hero content ───────────────────────────────────── */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding-left: 9vw;
+  padding-right: 0;
+  width: clamp(520px, 60vw, 1100px);
+  gap: 1.9rem;
+  overflow: visible;
 }
 
-/* Firefox */
-.intro *::-moz-selection {
-  background: #000;
-  color: #fff;
+/* ─── Eyebrow — with glitch ──────────────────────────── */
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: monospace;
+  font-size: clamp(0.58rem, 0.95vw, 0.78rem);
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+  opacity: 0;
+  animation: eyebrowGlitch 7s linear infinite;
 }
 
-/* ----- Visit Count ------ */
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 38px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.22);
+  flex-shrink: 0;
+}
+
+@keyframes eyebrowGlitch {
+  0%, 91%, 100% {
+    transform: none;
+    clip-path: none;
+    opacity: 0.38;
+  }
+  91.4% {
+    transform: translateX(-3px);
+    clip-path: polygon(0 0, 100% 0, 100% 42%, 0 42%);
+    opacity: 0.55;
+  }
+  92% {
+    transform: translateX(3px);
+    clip-path: polygon(0 58%, 100% 58%, 100% 100%, 0 100%);
+    opacity: 0.45;
+  }
+  92.6% {
+    transform: translateX(-1px);
+    clip-path: none;
+    opacity: 0.38;
+  }
+  93% {
+    transform: none;
+    opacity: 0.55;
+  }
+  93.5% {
+    opacity: 0.38;
+  }
+}
+
+/* ─── Role badge — no border, no dot, glitch ─────────── */
+.hero-role-badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 1.8rem;
+  opacity: 0;
+  animation: roleBadgeGlitch 5s linear infinite;
+}
+
+@keyframes roleBadgeGlitch {
+  0%, 85%, 100% {
+    transform: none;
+    clip-path: none;
+    opacity: 1;
+  }
+  85.6% {
+    transform: translateX(-4px);
+    clip-path: polygon(0 0, 100% 0, 100% 40%, 0 40%);
+    opacity: 0.9;
+  }
+  86.4% {
+    transform: translateX(5px);
+    clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+    opacity: 0.85;
+  }
+  87% {
+    transform: translateX(-2px);
+    clip-path: none;
+    opacity: 0.95;
+  }
+  87.5% {
+    transform: none;
+    opacity: 0.6;
+  }
+  88% {
+    opacity: 1;
+  }
+}
+
+.hero-role-text {
+  font-family: monospace;
+  font-size: clamp(0.6rem, 1.1vw, 0.80rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  transition: opacity 0.32s ease, transform 0.32s ease;
+  white-space: nowrap;
+}
+
+.hero-role-text--in  { opacity: 1; transform: translateY(0);   }
+.hero-role-text--out { opacity: 0; transform: translateY(-7px); }
+
+/* ─── Divider (white) ────────────────────────────────── */
+.hero-divider {
+  width: 64px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.32);
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+/* ─── Tagline ────────────────────────────────────────── */
+.hero-tagline {
+  font-size: clamp(0.76rem, 1.35vw, 0.96rem);
+  letter-spacing: 0.09em;
+  line-height: 1.95;
+  color: rgba(255, 255, 255, 0.46);
+  opacity: 0;
+}
+
+/* ─── Scroll text ────────────────────────────────────── */
+.scroll-text {
+  font-size: clamp(0.68rem, 1.1vw, 0.86rem);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+  opacity: 0;
+}
+
+/* ─── Decorative kanji watermark (white stroke only) ─── */
+.hero-deco-text {
+  position: absolute;
+  right: 5vw;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(16rem, 26vw, 36rem);
+  font-family: 'Zen Kaku Gothic New', sans-serif;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.030);
+  user-select: none;
+  pointer-events: none;
+  line-height: 1;
+  z-index: 1;
+  letter-spacing: -0.05em;
+  animation: decoFloat 18s ease-in-out infinite alternate;
+}
+
+@keyframes decoFloat {
+  from { transform: translateY(-50%) translateX(0); }
+  to   { transform: translateY(-52%) translateX(-1%); }
+}
+
+/* ─── Visit counter ──────────────────────────────────── */
 .visit-counter {
   position: absolute;
   top: 24px;
   right: 28px;
+  z-index: 10;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   font-family: monospace;
-  opacity: 0.75;
   user-select: none;
 }
 
 .visit-label {
-  font-size: 11px;
-  letter-spacing: 0.2em;
+  font-size: 10px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.35);
 }
 
 .visit-count {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 500;
-  mix-blend-mode: difference;
+  color: rgba(255, 255, 255, 0.80);
 }
 
+/* ─── Selections ─────────────────────────────────────── */
+.intro *::selection      { background: rgba(255, 255, 255, 0.25); color: #fff; }
+.intro *::-moz-selection { background: rgba(255, 255, 255, 0.25); color: #fff; }
+
+/* ─── Mobile ( ≤ 768px ) ─────────────────────────────── */
 @media (max-width: 768px) {
-  .welcome-text {
-    left: 50%;
-    width: 90vw;
+  .hero-content {
+    align-items: center;
+    text-align: center;
+    padding: 0 6vw;
+    width: 100%;
+    gap: 1.3rem;
   }
 
-  .title {
-    width: 90vw;
+  .hero-eyebrow::before {
+    display: none;
   }
 
-  .scroll-text {
-    font-size: 1rem;
+  .hero-eyebrow {
+    justify-content: center;
+  }
+
+  .hero-divider {
+    transform-origin: center;
+  }
+
+  .hero-deco-text {
+    font-size: clamp(10rem, 55vw, 18rem);
+    right: 50%;
+    transform: translate(50%, -50%);
+    opacity: 0.6;
   }
 
   .visit-counter {
-    top: 16px;
-    right: 16px;
+    top: 14px;
+    right: 14px;
+  }
+}
+
+/* ─── Tablet ( 769px – 1024px ) ─────────────────────── */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .hero-content {
+    padding: 0 7vw;
+    width: clamp(480px, 65vw, 900px);
+    gap: 1.5rem;
   }
 }

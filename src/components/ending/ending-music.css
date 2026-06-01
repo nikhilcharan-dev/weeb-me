@@ -1,0 +1,73 @@
+.ending-music-btn {
+    position: absolute;
+    top: 28px;
+    right: 28px;
+    z-index: 20;
+    pointer-events: auto;
+
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(30, 30, 30, 0.06);
+    border: 1px solid rgba(30, 30, 30, 0.14);
+
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.ending-music-btn:hover {
+    background: rgba(30, 30, 30, 0.12);
+    border-color: rgba(30, 30, 30, 0.22);
+}
+
+.ending-music-icon {
+    font-size: 17px;
+    color: #1e1e1e;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+    user-select: none;
+}
+
+/* Gentle pulse on the icon when playing */
+.ending-music-btn.is-playing .ending-music-icon {
+    animation: music-breathe 3.2s ease-in-out infinite;
+}
+
+@keyframes music-breathe {
+    0%, 100% { opacity: 0.55; }
+    50%       { opacity: 1;    }
+}
+
+/* Expanding sonar rings */
+.music-ring {
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    border: 1px solid rgba(30, 30, 30, 0.45);
+    animation: music-ring-out 2.1s ease-out infinite;
+    animation-delay: var(--delay, 0s);
+    pointer-events: none;
+}
+
+@keyframes music-ring-out {
+    0%   { transform: scale(1);   opacity: 0.55; }
+    100% { transform: scale(2.8); opacity: 0;    }
+}
+
+@media (max-width: 768px) {
+    .ending-music-btn {
+        top: 18px;
+        right: 18px;
+        width: 36px;
+        height: 36px;
+    }
+
+    .ending-music-icon {
+        font-size: 15px;
+    }
+}

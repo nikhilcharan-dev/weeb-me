@@ -1,167 +1,257 @@
+/* ─── Panel ─────────────────────────────────────────────────── */
 .panel-four {
+  position: relative;
   width: 300vw;
   height: 100vh;
-  padding: 6rem 6vw;
+  background: #07070e;
   color: #fff;
+  overflow: hidden;
 }
 
-.panel-four-inner {
-  max-width: 1600px;
-  margin: auto;
+/* Dot-grid texture */
+.p4-grid {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ─── Header ────────────────────────────────────────────────── */
+.p4-header {
+  position: absolute;
+  top: 8%;
+  left: 6vw;
+  z-index: 2;
+  max-width: 580px;
+}
+
+.p4-header-line {
+  width: 36px;
+  height: 2px;
+  background: rgba(255,255,255,0.5);
+  margin-bottom: 1rem;
 }
 
 .p4-title {
-  font-size: clamp(3rem, 5vw, 4.5rem);
-  margin-bottom: 0.6rem;
+  font-size: clamp(3.5rem, 5.5vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin-bottom: 0.9rem;
 }
 
 .p4-sub {
-  opacity: 0.7;
-  max-width: 620px;
-  margin-bottom: 4rem;
-  line-height: 1.6;
+  font-size: clamp(0.76rem, 1.1vw, 0.88rem);
+  line-height: 1.8;
+  color: rgba(255,255,255,0.42);
+  letter-spacing: 0.04em;
 }
 
-/* ===== Timeline Layout ===== */
-
-.p4-horizontal {
-  position: relative;
-  display: flex;
-  gap: 4rem;
-  align-items: flex-start;
-  padding-top: 3rem;
-  margin-top: 10rem;
-}
-
-/* Timeline Line */
-
+/* ─── Rail ──────────────────────────────────────────────────── */
 .p4-h-line {
   position: absolute;
-  top: 1.2rem;
-  left: 0;
-  height: 3px;
-  width: 120%;
+  top: calc(55% - 1px);  /* center of 2px line = 55% */
+  left: 6vw;
+  width: 116vw;
+  height: 2px;
   background: linear-gradient(
-          to right,
-          rgba(255,255,255,0.6),
-          rgba(255,255,255,0.1)
+    to right,
+    rgba(255,255,255,0.75) 0%,
+    rgba(255,255,255,0.22) 65%,
+    rgba(255,255,255,0.05) 100%
   );
+  transform-origin: left center;
+  z-index: 1;
 }
 
-/* ===== Timeline Card ===== */
-
-.p4-item {
-  position: relative;
-  min-width: 260px;
-  padding: 1.4rem 1.6rem;
-  border-radius: 18px;
-
-  background: rgba(255,255,255,0.04);
-  backdrop-filter: blur(6px);
-  border: 1px solid rgba(255,255,255,0.06);
-
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-
-  opacity: 0.6;
-  transition:
-          opacity 0.4s ease,
-          transform 0.4s ease,
-          box-shadow 0.4s ease;
-}
-
-.p4-item h3 {
-  font-size: 1rem;
-  margin-bottom: 0.6rem;
-  font-weight: 500;
-}
-
-/* Subtitle Lines */
-
-.p4-line {
-  font-size: 0.85rem;
-  opacity: 0.65;
-  line-height: 1.6;
-}
-
-.p4-line:not(:last-child) {
-  margin-bottom: 0.35rem;
-}
-
-/* Dot */
-
-.p4-dot {
+/* Traveling spark */
+.p4-spark {
   position: absolute;
-  top: -1.4rem;
-  left: 1.6rem;
-  width: 10px;
-  height: 10px;
+  top: calc(55% - 7px);
+  left: 6vw;
+  width: 100px;
+  height: 16px;
   border-radius: 50%;
-  background: white;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-/* ===== Active State ===== */
-
-.p4-item.active {
-  opacity: 1;
-  transform: translateY(-6px);
-  box-shadow: 0 30px 60px rgba(0,0,0,0.35);
-}
-
-.p4-item.active::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: 18px;
-  background: linear-gradient(
-          120deg,
-          rgba(255,255,255,0.25),
-          transparent 40%
+  background: radial-gradient(
+    ellipse at 30% 50%,
+    rgba(255,255,255,1) 0%,
+    rgba(255,255,255,0.55) 25%,
+    transparent 65%
   );
+  filter: blur(3px);
+  z-index: 3;
   pointer-events: none;
 }
 
-.p4-item.active .p4-dot {
-  transform: scale(1.6);
-  box-shadow:
-          0 0 12px rgba(255,255,255,0.8),
-          0 0 24px rgba(255,255,255,0.4);
+/* ─── Items (absolute, above/below rail) ────────────────────── */
+.p4-item {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 210px;
+  z-index: 4;
 }
 
-.p4-item.active .p4-line {
-  opacity: 0.9;
+/*
+ * Rail center = 55% from top.
+ * Dot = 10px tall, so center = 5px below item top (below) / 5px above item bottom (above).
+ * --below: top = 55% - 5px  → dot center = 55%
+ * --above: bottom = 45% - 5px  → dot center = 55%
+ */
+.p4-item--below {
+  top: calc(55% - 5px);
 }
 
+.p4-item--above {
+  bottom: calc(45% - 5px);
+}
+
+/* ─── Dot ──────────────────────────────────────────────────── */
+.p4-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(255,255,255,0.35), 0 0 14px rgba(255,255,255,0.1);
+}
+
+/* ─── Connector ─────────────────────────────────────────────── */
+.p4-conn {
+  width: 1px;
+  height: 36px;
+  flex-shrink: 0;
+}
+
+/* Below: dot is above connector → fades downward away from dot */
+.p4-item--below .p4-conn {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.38), rgba(255,255,255,0.05));
+}
+
+/* Above: dot is below connector → fades upward away from dot */
+.p4-item--above .p4-conn {
+  background: linear-gradient(to top, rgba(255,255,255,0.38), rgba(255,255,255,0.05));
+}
+
+/* ─── Card ──────────────────────────────────────────────────── */
+.p4-card {
+  position: relative;
+  width: 210px;
+  padding: 1.1rem 1.3rem;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* Accent stripe facing the rail */
+.p4-item--below .p4-card {
+  border-top: 1.5px solid rgba(255,255,255,0.42);
+}
+
+.p4-item--above .p4-card {
+  border-bottom: 1.5px solid rgba(255,255,255,0.42);
+}
+
+/* Large faded index watermark */
+.p4-card-idx {
+  position: absolute;
+  right: 0.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 5rem;
+  font-weight: 700;
+  font-family: monospace;
+  color: rgba(255,255,255,0.042);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.p4-card-year {
+  display: block;
+  font-family: monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.32);
+  margin-bottom: 0.45rem;
+}
+
+.p4-card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin-bottom: 0.65rem;
+  color: #fff;
+}
+
+.p4-card-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.p4-card-tags li {
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.46);
+  line-height: 1.45;
+}
+
+.p4-card-tags li::before {
+  content: '— ';
+  opacity: 0.38;
+}
+
+/* ─── Mobile ────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .panel-four {
     width: 100%;
     height: auto;
     min-height: 100svh;
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 1.5rem 4rem;
+    overflow: visible;
   }
 
-  .p4-sub {
-    margin-bottom: 2rem;
-  }
-
-  .p4-horizontal {
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 2rem;
-    padding-top: 0;
-  }
-
-  .p4-h-line {
+  .p4-grid,
+  .p4-h-line,
+  .p4-spark {
     display: none;
+  }
+
+  .p4-header {
+    position: static;
+    max-width: 100%;
+    margin-bottom: 2.5rem;
   }
 
   .p4-item {
-    min-width: auto;
+    position: static;
+    display: block;
     width: 100%;
-    opacity: 1;
+    margin-bottom: 1rem;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
   }
 
-  .p4-dot {
+  .p4-dot,
+  .p4-conn {
     display: none;
+  }
+
+  .p4-card {
+    width: 100%;
+    border-top: 1.5px solid rgba(255,255,255,0.35) !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07) !important;
+    border-radius: 12px;
   }
 }

@@ -102,8 +102,23 @@ export default function HorizontalScroll({ isMobile = false }) {
                 );
             });
 
+            // Hero exit — lift + fade hero content as hs-wrapper scrolls into view
+            ScrollTrigger.create({
+                trigger: wrapperRef.current,
+                start: "top 65%",
+                end: "top top",
+                scrub: 0.8,
+                onUpdate: self => {
+                    const p = self.progress
+                    gsap.set('.hero-content', { y: -p * 44, opacity: 1 - p * 0.88 })
+                },
+                onLeaveBack: () => gsap.set('.hero-content', { y: 0, opacity: 1 }),
+            })
+
             setTimelineReady(true);
             ScrollTrigger.refresh();
+
+            return () => gsap.set('.hero-content', { clearProps: 'y,opacity' })
         }, wrapperRef);
 
         return () => ctx.revert();
